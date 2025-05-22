@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Recenzii - Books on Web</title>
+    <link rel="stylesheet" href="reviews.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">📝 Recenzii</div>
+        <div>
+            <a href="/Homepage/homepage.html" class="back-btn">🏠 Înapoi</a>
+            <button id="logout" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <h1>Adaugă o recenzie</h1>
+
+    <form id="reviewForm">
+        <select id="bookSelect" required>
+            <option value="">Alege o carte</option>
+        </select>
+        <textarea id="comment" placeholder="Scrie recenzia ta..." required></textarea>
+        <button type="submit">Trimite recenzia</button>
+    </form>
+
+    <h2>Recenzii recente</h2>
+    <section id="reviewList" class="review-list"></section>
+</div>
+
+<script src="reviews.js"></script>
+</body>
+</html>

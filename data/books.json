@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Ion",
+    "author": "Liviu Rebreanu",
+    "year": 1820,
+    "category": "roman"
+  },
+  {
+    "title": "Luceafarul",
+    "author": "Mihai Eminescu",
+    "year": 1879,
+    "category": "Romantism"
+  },
+  {
+    "title": "Harap Alb",
+    "author": "Ion Creanga",
+    "year": 1920,
+    "category": "basm"
+  }
+]

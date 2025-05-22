@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Books on Web – Homepage</title>
+    <link rel="stylesheet" href="homepage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">📚 Books on Web</div>
+        <button id="logout" class="logout-btn">Logout</button>
+    </nav>
+
+    <section class="content">
+        <h1 class="welcome" id="welcome">Bun venit!</h1>
+        <div class="card-grid">
+            <a href="/Books/books.html" class="card">
+                <div class="icon">📖</div>
+                <h2>Cărți</h2>
+                <p>Descoperă sau adaugă cărți noi în colecție.</p>
+            </a>
+            <a href="/Reviews/reviews.html" class="card">
+                <div class="icon">📝</div>
+                <h2>Recenzii</h2>
+                <p>Scrie păreri despre cărțile citite sau citește recenzii.</p>
+            </a>
+            <a href="/statistici.html" class="card">
+                <div class="icon">📊</div>
+                <h2>Statistici</h2>
+                <p>Vezi cele mai apreciate lecturi și preferințele comunității.</p>
+            </a>
+        </div>
+    </section>
+</div>
+
+<script>
+    const user = localStorage.getItem("user");
+    if (!user) {
+        window.location.href = "/Autentificare/login.html";
+    } else {
+        document.getElementById("welcome").textContent = `Bun venit, ${user}!`;
+    }
+
+    document.getElementById("logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        window.location.href = "/Autentificare/login.html";
+    });
+</script>
+</body>
+</html>
