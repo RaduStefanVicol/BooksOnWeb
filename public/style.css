@@ -1,46 +1,96 @@
-body {
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to right, #7f00ff, #e100ff);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+* {
     margin: 0;
-    color: white;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-.container {
+body {
+    background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
     text-align: center;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 40px 60px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
+
+.landing-container {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 100%;
     backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease;
 }
 
 h1 {
-    margin-bottom: 10px;
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 15px;
 }
 
-.buttons {
-    margin-top: 30px;
+p {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.hero-img {
+    width: 120px;
+    margin-bottom: 30px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.actions {
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: white;
-    color: #7f00ff;
+    padding: 14px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
     text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: background 0.3s, color 0.3s;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.login {
+    background: #00c9a7;
+}
+
+.register {
+    background: #ff5e62;
 }
 
 .btn:hover {
-    background-color: #7f00ff;
-    color: white;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin-top: 10px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
 }
