@@ -99,26 +99,36 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
+    // ✅ GET /api/reviews – returnează toate recenziile
     if (req.url === '/api/reviews' && req.method === 'GET') {
         const reviewsPath = './data/reviews.json';
         if (!fs.existsSync(reviewsPath)) {
             fs.writeFileSync(reviewsPath, '[]');
         }
-
         const reviews = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
+
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        return res.end(JSON.stringify(reviews));
+        res.end(JSON.stringify(reviews));
+        return;
     }
 
+// ✅ POST /api/reviews – adaugă o recenzie nouă
     if (req.url === '/api/reviews' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => { body += chunk; });
 
         req.on('end', () => {
-            const { bookId, content, username, date } = JSON.parse(body);
-            if (!bookId || !content || !username || !date) {
+            const newReview = JSON.parse(body);
+            const requiredFields = ['user', 'book', 'comment','rating'];
+            if (newReview.rating < 1 || newReview.rating > 5) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ error: 'Toate câmpurile sunt necesare' }));
+                return res.end(JSON.stringify({ error: 'Rating invalid (1-5)' }));
+            }
+
+            const missing = requiredFields.filter(f => !newReview[f]);
+            if (missing.length) {
+                res.writeHead(400, { 'Content-Type': 'application/json' });
+                return res.end(JSON.stringify({ error: `Câmpuri lipsă: ${missing.join(', ')}` }));
             }
 
             const reviewsPath = './data/reviews.json';
@@ -127,14 +137,15 @@ const server = http.createServer((req, res) => {
             }
 
             const reviews = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
-            reviews.push({ bookId, content, username, date });
+            reviews.push(newReview);
             fs.writeFileSync(reviewsPath, JSON.stringify(reviews, null, 2));
 
             res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Recenzie salvată cu succes' }));
+            res.end(JSON.stringify({ message: 'Recenzie adăugată cu succes' }));
         });
         return;
     }
+
     if (req.method === 'GET') {
         let filePath = './public' + (req.url === '/' ? '/index.html' : req.url);
         const ext = path.extname(filePath);
@@ -160,6 +171,7 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
+
 
     // ✅ DEFAULT 404
     res.writeHead(404);

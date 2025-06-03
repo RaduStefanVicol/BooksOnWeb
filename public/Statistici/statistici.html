@@ -1,10 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📈 Statistici - Books on Web</title>
+  <link rel="stylesheet" href="/Statistici/statistici.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-$END$
+<div class="container">
+  <header>
+    <h1>📊 Statistici Lecturi</h1>
+    <button id="logout">Logout</button>
+  </header>
+
+  <section class="filters">
+    <label for="bookFilter">Filtrează după carte:</label>
+    <select id="bookFilter">
+      <option value="all">Toate</option>
+    </select>
+    <button id="downloadCsv">⬇️ Exportă CSV</button>
+  </section>
+
+  <section class="stats">
+    <div class="stat-card">
+      <h3>📚 Total Recenzii</h3>
+      <p id="totalReviews">0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>⭐️ Media Stele</h3>
+      <p id="averageRating">0.0</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>🧑‍🤝‍🧑 Utilizatori unici</h3>
+      <p id="uniqueUsers">0</p>
+    </div>
+  </section>
+
+  <section class="chart-section">
+    <h2>📉 Distribuția ratingurilor</h2>
+    <canvas id="ratingChart" width="400" height="200"></canvas>
+  </section>
+
+  <section class="table-section">
+    <h2>📋 Detalii recenzii</h2>
+    <table id="reviewTable">
+      <thead>
+      <tr>
+        <th>Carte</th>
+        <th>Utilizator</th>
+        <th>Comentariu</th>
+        <th>Rating</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+</div>
+
+<script src="/Statistici/statistici.js"></script>
 </body>
 </html>

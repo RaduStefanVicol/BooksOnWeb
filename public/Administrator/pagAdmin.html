@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrare cărți – Books on Web</title>
+    <link rel="stylesheet" href="pagAdmin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">📖 Administrare cărți</div>
+        <div>
+            <button id="logout" class="logout-btn">Logout</button>
+        </div>
+    </nav>
+
+    <h1>Adaugă o carte nouă</h1>
+
+    <form id="addBookForm">
+        <input type="text" id="title" placeholder="Titlul cărții" required>
+        <input type="text" id="author" placeholder="Autor" required>
+        <input type="number" id="year" placeholder="Anul publicării" required>
+        <input type="text" id="category" placeholder="Categorie" required>
+        <button type="submit">Adaugă</button>
+    </form>
+
+    <h2>Cărțile Adaugate</h2>
+    <section id="bookList" class="book-list"></section>
+</div>
+
+<script src="pagAdmin.js"></script>
+</body>
+</html>

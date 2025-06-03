@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "user": "Alexandru",
+    "book": "Ion",
+    "comment": "Nu mi place cartea! Este prea plictisitoare"
+  },
+  {
+    "user": "Alexandru",
+    "book": "Luceafarul",
+    "comment": "Interesanta carte! O ador!"
+  },
+  {
+    "user": "Alexandru",
+    "book": "Harap Alb",
+    "comment": "Foarte multa comedie!",
+    "rating": 4
+  },
+  {
+    "user": "emanuel.luculescu",
+    "book": "Ion",
+    "comment": "E o carte ok!",
+    "rating": 3
+  },
+  {
+    "user": "emanuel.luculescu",
+    "book": "Luceafarul",
+    "comment": "Romantica",
+    "rating": null
+  },
+  {
+    "user": "emanuel.luculescu",
+    "book": "Luceafarul",
+    "comment": "wow!",
+    "rating": 5
+  },
+  {
+    "user": "emanuel.luculescu",
+    "book": "Enigma Otiliei",
+    "comment": "Mi a placut mult!",
+    "rating": 5
+  },
+  {
+    "user": "isachi.timotei",
+    "book": "Biblia",
+    "comment": "Cea mai importanta carte de citit!",
+    "rating": 5
+  }
+]

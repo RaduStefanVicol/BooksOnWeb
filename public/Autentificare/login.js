@@ -19,7 +19,13 @@ if (loginForm) {
         if (res.ok) {
             localStorage.setItem("token", result.token);
             localStorage.setItem("user", username);
-            window.location.href = "/Homepage/homepage.html";
+
+            // 👇 verificăm dacă e admin
+            if (username === "admin") {
+                window.location.href = "/Administrator/pagAdmin.html";
+            } else {
+                window.location.href = "/Homepage/homepage.html";
+            }
         } else {
             if (errorBox) {
                 errorBox.textContent = result.error || "Eroare necunoscută.";

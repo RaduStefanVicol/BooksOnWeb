@@ -98,6 +98,39 @@ button[type="submit"] {
     border: none;
     transition: background 0.2s;
 }
+.error-message {
+    margin-top: 16px;
+    text-align: center;
+    color: #e74c3c;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+.stars {
+    font-size: 18px;
+    color: #f1c40f;
+    margin-bottom: 8px;
+}
+.show-more {
+    margin: 30px auto;
+    display: block;
+    padding: 10px 24px;
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.show-more:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
 
 button[type="submit"]:hover {
     background: #1f2235;
@@ -141,6 +174,19 @@ h2 {
     margin-top: 10px;
     color: #888;
 }
+.filter-bar {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.filter-bar select {
+    padding: 8px 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: none;
+    margin-left: 10px;
+}
+
 
 /* Animation */
 @keyframes fadeIn {

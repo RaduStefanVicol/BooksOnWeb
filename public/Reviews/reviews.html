@@ -25,9 +25,35 @@
         <textarea id="comment" placeholder="Scrie recenzia ta..." required></textarea>
         <button type="submit">Trimite recenzia</button>
     </form>
+    <div id="errorMsg" class="error-message" style="display: none;"></div>
+    <select id="rating" required>
+        <option value="">Alege o evaluare</option>
+        <option value="1">★☆☆☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="4">★★★★☆</option>
+        <option value="5">★★★★★</option>
+    </select>
+
 
     <h2>Recenzii recente</h2>
+    <div class="filter-bar">
+        <label for="filterSelect">Filtrează după carte:</label>
+        <select id="filterSelect">
+            <option value="all">Toate cărțile</option>
+        </select>
+    </div>
+    <div class="filter-bar">
+        <label for="sortSelect">Sortează după:</label>
+        <select id="sortSelect">
+            <option value="recent">Cele mai recente</option>
+            <option value="high">Cele mai bune</option>
+            <option value="low">Cele mai slabe</option>
+        </select>
+    </div>
     <section id="reviewList" class="review-list"></section>
+    <button id="showMoreBtn" class="show-more" style="display: none;">🔽 Vezi mai multe recenzii</button>
+
 </div>
 
 <script src="reviews.js"></script>

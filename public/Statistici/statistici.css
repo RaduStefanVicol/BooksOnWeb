@@ -1,0 +1,120 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    min-height: 100vh;
+    padding: 40px;
+    background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    color: white;
+}
+
+#logout {
+    padding: 0.5rem 1rem;
+    background-color: #ef5350;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.filters select, .filters button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    flex: 1 1 30%;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 1.2rem;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #7b2ff7;
+    margin: 0;
+}
+
+.chart-section, .table-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.chart-section h2, .table-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #7b2ff7;
+}
+
+#reviewTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.95rem;
+}
+
+#reviewTable th, #reviewTable td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#reviewTable th {
+    background-color: #7b2ff7;
+    color: white;
+}
+
+#reviewTable td {
+    color: black; /* <- ADĂUGAT pentru a face textul recenziilor vizibil */
+}
+
+#reviewTable tr:hover {
+    background-color: #f1f8ff;
+}
