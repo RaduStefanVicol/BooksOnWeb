@@ -11,34 +11,7 @@ body {
     min-height: 100vh;
     padding: 40px;
 }
-.book-card {
-    background-color: #f2f2f2;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 400px;
-    font-family: 'Inter', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
 
-.book-card img {
-    width: 100px;
-    height: auto;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
-.book-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
 .container {
     max-width: 1000px;
     margin: auto;
@@ -106,12 +79,14 @@ form button:hover {
     background-color: #059669;
 }
 
+/* Book list grid */
 .book-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
+/* Book card styling */
 .book-card {
     background: rgba(255, 255, 255, 0.08);
     padding: 20px;
@@ -120,10 +95,21 @@ form button:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     animation: slideUp 0.4s ease;
     transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .book-card:hover {
     transform: translateY(-5px);
+}
+
+.book-card img {
+    width: 100px;
+    height: auto;
+    border-radius: 6px;
+    margin-bottom: 10px;
 }
 
 .book-card strong {
@@ -136,6 +122,72 @@ form button:hover {
     opacity: 0.9;
 }
 
+/* Progress toggle button */
+.toggle-progress {
+    margin-top: 12px;
+    padding: 8px 14px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.toggle-progress:hover {
+    background-color: #2563eb;
+}
+
+/* Progress section */
+.progress-section {
+    display: none;
+    width: 100%;
+    margin-top: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.progress-section label {
+    display: block;
+    margin: 8px 0 4px;
+    font-size: 14px;
+    color: #fcd34d;
+}
+
+.progress-section input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.calculate-progress {
+    padding: 8px 12px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.calculate-progress:hover {
+    background-color: #059669;
+}
+
+.progress-output {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #fbbf24;
+}
+
+/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }

@@ -23,10 +23,52 @@ document.addEventListener("DOMContentLoaded", () => {
                     const card = document.createElement("div");
                     card.className = "book-card";
                     card.innerHTML = `
-                        <strong>${book.title}</strong><br>
-                        <span>de ${book.author} (${book.year})</span><br>
-                        <em>${book.category}</em>`;
+                        <strong>${book.title}</strong>
+                        <span>de ${book.author} (${book.year})</span>
+                        <em>${book.category}</em>
+
+                        <button class="toggle-progress">📊 Progress</button>
+
+                        <div class="progress-section" style="display: none; width: 100%; margin-top: 10px;">
+                            <label>Număr total de pagini:</label>
+                            <input type="number" class="total-pages" placeholder="Ex: 300">
+
+                            <label>Pagina actuală:</label>
+                            <input type="number" class="current-page" placeholder="Ex: 45">
+
+                            <button class="calculate-progress">Calculează progres</button>
+                            <div class="progress-output" style="margin-top: 6px; font-weight: bold;"></div>
+                        </div>
+                    `;
                     list.appendChild(card);
+
+                    const toggleBtn = card.querySelector(".toggle-progress");
+                    const progressSection = card.querySelector(".progress-section");
+                    const calcBtn = card.querySelector(".calculate-progress");
+                    const totalInput = card.querySelector(".total-pages");
+                    const currentInput = card.querySelector(".current-page");
+                    const output = card.querySelector(".progress-output");
+
+                    toggleBtn.addEventListener("click", () => {
+                        progressSection.style.display =
+                            progressSection.style.display === "none" ? "block" : "none";
+                    });
+
+                    calcBtn.addEventListener("click", () => {
+                        const total = parseInt(totalInput.value);
+                        const current = parseInt(currentInput.value);
+
+                        if (
+                            isNaN(total) || isNaN(current) ||
+                            total <= 0 || current < 0 || current > total
+                        ) {
+                            output.textContent = "Date invalide.";
+                            return;
+                        }
+
+                        const percent = ((current / total) * 100).toFixed(1);
+                        output.textContent = `Ai citit ${percent}% din carte. 📚`;
+                    });
                 });
             });
     }
