@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Biblioteca Centrală Municipală",
+    "address": "Strada Bibliotecii 10, Iași",
+    "mapsLink": "https://www.google.com/maps?q=Biblioteca+Centrală+Municipală+Iași"
+  },
+  {
+    "name": "Biblioteca Județeană Gheorghe Asachi",
+    "address": "Bd. Ștefan cel Mare și Sfânt 10, Iași",
+    "mapsLink": "https://www.google.com/maps?q=Biblioteca+Județeană+Iași"
+  },
+  {
+    "name": "Biblioteca Universitară Mihai Eminescu",
+    "address": "Strada Păcurari 4, Iași",
+    "mapsLink": "https://www.google.com/maps?q=Biblioteca+Universitară+Iași"
+  }
+]
