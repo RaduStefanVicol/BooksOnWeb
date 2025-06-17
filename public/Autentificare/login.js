@@ -6,31 +6,42 @@ if (loginForm) {
 
         const username = e.target.username.value.trim();
         const password = e.target.password.value.trim();
-
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        });
-
-        const result = await res.json();
         const errorBox = document.getElementById("error");
 
-        if (res.ok) {
-            localStorage.setItem("token", result.token);
-            localStorage.setItem("user", username);
+        try {
+            const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            });
 
-            // 👇 verificăm dacă e admin
-            if (username === "admin") {
-                window.location.href = "/Administrator/pagAdmin.html";
+            const result = await res.json();
+
+            if (res.ok) {
+                // Curățăm orice veche cheie "username" din greșeală
+                localStorage.removeItem("username");
+
+                //  Salvăm datele corecte
+                localStorage.setItem("token", result.token);
+                localStorage.setItem("user", username);
+
+                // 🔐 Redirecționare în funcție de rol
+                if (username === "admin") {
+                    window.location.href = "/Administrator/pagAdmin.html";
+                } else {
+                    window.location.href = "/Homepage/homepage.html";
+                }
             } else {
-                window.location.href = "/Homepage/homepage.html";
+                if (errorBox) {
+                    errorBox.textContent = result.error || "Eroare necunoscută.";
+                } else {
+                    alert(result.error || "Eroare necunoscută.");
+                }
             }
-        } else {
+        } catch (err) {
+            console.error("Eroare la conectare:", err);
             if (errorBox) {
-                errorBox.textContent = result.error || "Eroare necunoscută.";
-            } else {
-                alert(result.error || "Eroare necunoscută.");
+                errorBox.textContent = "Nu s-a putut conecta la server.";
             }
         }
     });

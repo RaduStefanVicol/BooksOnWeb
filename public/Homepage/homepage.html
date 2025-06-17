@@ -37,8 +37,12 @@
 
 <script>
     const user = localStorage.getItem("user");
+
     if (!user) {
         window.location.href = "/Autentificare/login.html";
+    } else if (user === "admin") {
+        // Dacă admin încearcă să forțeze accesul la homepage, îl redirecționăm înapoi
+        window.location.href = "/Administrator/pagAdmin.html";
     } else {
         document.getElementById("welcome").textContent = `Bun venit, ${user}!`;
     }

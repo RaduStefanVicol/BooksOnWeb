@@ -8,20 +8,22 @@
 </head>
 <body>
 <div class="register-container">
-    <h1>📝 Înregistrare</h1>
+    <h1>Înregistrare</h1>
     <p class="subtitle">Creează-ți un cont și pornește aventura lecturii!</p>
 
     <form id="registerForm">
-        <input type="text" id="username" name="username" placeholder="👤 Nume utilizator" required>
-        <input type="password" id="password" name="password" placeholder="🔒 Parolă" required>
-        <input type="password" id="confirm" name="confirm" placeholder="🔁 Confirmare parolă" required>
-        <button type="submit" class="btn-register">✅ Creează cont</button>
+        <input type="text" id="username" name="username" placeholder="Nume utilizator" required>
+        <input type="password" id="password" name="password" placeholder="Parolă" required>
+        <input type="password" id="confirm" name="confirm" placeholder="Confirmare parolă" required>
+        <button type="submit" class="btn-register">Creează cont</button>
     </form>
 
-    <p id="register-error" style="color: red; margin-top: 10px;"></p>
+    <div id="register-error" class="error-message"></div>
+    <div id="register-success" class="success-message"></div>
+
 
     <p class="login">Ai deja cont? <a href="login.html">Autentifică-te aici</a></p>
-    <p class="footer">Creat cu ❤️ pentru iubitorii de cărți.</p>
+    <p class="footer">Creat cu pasiune pentru iubitorii de cărți.</p>
 </div>
 
 <script src="register.js"></script>

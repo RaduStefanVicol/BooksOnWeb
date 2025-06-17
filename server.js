@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const db = require('./db'); // baza de date SQLite
 const JWT_SECRET = 'super-secret-jwt-key';
 const PORT = 3000;
 
@@ -41,20 +42,24 @@ const server = http.createServer((req, res) => {
                 return res.end(JSON.stringify({ error: 'Username și parolă necesare' }));
             }
 
-            const users = JSON.parse(fs.readFileSync('./data/users.json', 'utf-8'));
-            const exists = users.find(u => u.username === username);
-            if (exists) {
-                res.writeHead(409, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ error: 'Utilizatorul există deja' }));
-            }
+            const sql = `INSERT INTO users (username, password) VALUES (?, ?)`;
+            db.run(sql, [username, password], function(err) {
+                if (err) {
+                    if (err.message.includes("UNIQUE")) {
+                        res.writeHead(409, { 'Content-Type': 'application/json' });
+                        return res.end(JSON.stringify({ error: 'Utilizatorul există deja' }));
+                    }
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Eroare server' }));
+                }
 
-            users.push({ username, password });
-            fs.writeFileSync('./data/users.json', JSON.stringify(users, null, 2));
-            res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Înregistrare reușită' }));
+                res.writeHead(201, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ message: 'Înregistrare reușită' }));
+            });
         });
         return;
     }
+
 
     if (req.url === '/api/login' && req.method === 'POST') {
         let body = '';
@@ -62,28 +67,34 @@ const server = http.createServer((req, res) => {
 
         req.on('end', () => {
             const { username, password } = JSON.parse(body);
-            const users = JSON.parse(fs.readFileSync('./data/users.json', 'utf-8'));
-            const user = users.find(u => u.username === username && u.password === password);
 
-            if (user) {
-                const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '2h' });
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Autentificare reușită', token }));
-            } else {
-                res.writeHead(401, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: 'Nume sau parolă incorecte' }));
-            }
+            const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
+            db.get(sql, [username, password], (err, user) => {
+                if (err) {
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Eroare server' }));
+                }
+
+                if (user) {
+                    const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '2h' });
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Autentificare reușită', token }));
+
+                } else {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Nume sau parolă incorecte' }));
+                }
+            });
         });
         return;
     }
 
+
     if (req.url === '/api/books' && req.method === 'GET') {
         const booksPath = './data/books.json';
-        if (!fs.existsSync(booksPath)) {
-            fs.writeFileSync(booksPath, '[]');
-        }
-        const books = JSON.parse(fs.readFileSync(booksPath, 'utf-8'));
+        if (!fs.existsSync(booksPath)) fs.writeFileSync(booksPath, '[]');
 
+        const books = JSON.parse(fs.readFileSync(booksPath, 'utf-8'));
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(books));
         return;
@@ -96,17 +107,15 @@ const server = http.createServer((req, res) => {
         req.on('end', () => {
             const newBook = JSON.parse(body);
             const requiredFields = ['title', 'author', 'year', 'category'];
+            const missing = requiredFields.filter(f => !newBook[f]);
 
-            const missing = requiredFields.filter(field => !newBook[field]);
             if (missing.length) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 return res.end(JSON.stringify({ error: `Câmpuri lipsă: ${missing.join(', ')}` }));
             }
 
             const booksPath = './data/books.json';
-            if (!fs.existsSync(booksPath)) {
-                fs.writeFileSync(booksPath, '[]');
-            }
+            if (!fs.existsSync(booksPath)) fs.writeFileSync(booksPath, '[]');
 
             const books = JSON.parse(fs.readFileSync(booksPath, 'utf-8'));
             books.push(newBook);
@@ -120,13 +129,12 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+
     if (req.url === '/api/reviews' && req.method === 'GET') {
         const reviewsPath = './data/reviews.json';
-        if (!fs.existsSync(reviewsPath)) {
-            fs.writeFileSync(reviewsPath, '[]');
-        }
-        const reviews = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
+        if (!fs.existsSync(reviewsPath)) fs.writeFileSync(reviewsPath, '[]');
 
+        const reviews = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(reviews));
         return;
@@ -148,29 +156,26 @@ const server = http.createServer((req, res) => {
             const missing = requiredFields.filter(f => !newReview[f]);
             if (missing.length) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ error: `Câmpuri lipsă: ${missing.join(', ')}` }));
+                return res.end(JSON.stringify({ error: `Campuri lipsa: ${missing.join(', ')}` }));
             }
 
             const reviewsPath = './data/reviews.json';
-            if (!fs.existsSync(reviewsPath)) {
-                fs.writeFileSync(reviewsPath, '[]');
-            }
+            if (!fs.existsSync(reviewsPath)) fs.writeFileSync(reviewsPath, '[]');
 
             const reviews = JSON.parse(fs.readFileSync(reviewsPath, 'utf-8'));
             reviews.push(newReview);
             fs.writeFileSync(reviewsPath, JSON.stringify(reviews, null, 2));
 
             res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Recenzie adăugată cu succes' }));
+            res.end(JSON.stringify({ message: 'Recenzie adaugata cu succes' }));
         });
         return;
     }
 
+
     if (req.url === '/api/libraries' && req.method === 'GET') {
         const libPath = './data/libraries.json';
-        if (!fs.existsSync(libPath)) {
-            fs.writeFileSync(libPath, '[]');
-        }
+        if (!fs.existsSync(libPath)) fs.writeFileSync(libPath, '[]');
 
         const libraries = JSON.parse(fs.readFileSync(libPath, 'utf-8'));
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -178,6 +183,7 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // 🖼️ STATIC FILES
     if (req.method === 'GET') {
         let filePath = './public' + (req.url === '/' ? '/index.html' : req.url);
         const ext = path.extname(filePath);
@@ -196,7 +202,7 @@ const server = http.createServer((req, res) => {
         fs.readFile(filePath, (err, content) => {
             if (err) {
                 res.writeHead(404);
-                res.end('404 - Fișierul nu a fost găsit');
+                res.end('404 - Fisierul nu a fost gasit');
             } else {
                 res.writeHead(200, { 'Content-Type': contentType });
                 res.end(content);
@@ -205,10 +211,11 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+
     res.writeHead(404);
     res.end('404 - Ruta necunoscută');
 });
 
 server.listen(PORT, () => {
-    console.log(`Serverul rulează la: http://localhost:${PORT}`);
+    console.log(` Serverul rulează la: http://localhost:${PORT}`);
 });
