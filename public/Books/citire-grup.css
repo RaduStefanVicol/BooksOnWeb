@@ -1,0 +1,101 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
+    color: white;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.back-btn {
+    color: white;
+    text-decoration: none;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    backdrop-filter: blur(4px);
+    animation: slideUp 0.4s ease;
+}
+
+.book-card strong {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.book-card em {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.book-card input {
+    margin-top: 10px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.book-card button {
+    margin-top: 10px;
+    background-color: #059669;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.book-card button:hover {
+    background-color: #059669;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

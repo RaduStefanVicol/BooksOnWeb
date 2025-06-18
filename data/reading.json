@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Programare Avansata",
+    "author": "Cristian Frasinaru",
+    "year": 2010,
+    "category": "Informatica"
+  },
+  {
+    "title": "Biblia",
+    "author": "Dumnezeu",
+    "year": 1888,
+    "category": "Spirituala"
+  },
+  {
+    "title": "Ion",
+    "author": "Liviu Rebreanu",
+    "year": 1820,
+    "category": "roman"
+  },
+  {
+    "title": "Enigma Otiliei",
+    "author": "George Calinescu",
+    "year": 1918,
+    "category": "nuvela"
+  },
+  {
+    "title": "Călătoria creştinului",
+    "author": "John Bunyan",
+    "year": "1900*",
+    "category": "Nespecificat"
+  },
+  {
+    "title": "Luceafarul",
+    "author": "Mihai Eminescu",
+    "year": 1879,
+    "category": "Romantism"
+  },
+  {
+    "title": "Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2",
+    "author": "Ben Brooks",
+    "year": "2020-08-07",
+    "category": "Juvenile Nonfiction"
+  }
+]

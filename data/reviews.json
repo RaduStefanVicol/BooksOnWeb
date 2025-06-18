@@ -44,5 +44,17 @@
     "book": "Biblia",
     "comment": "Cea mai importanta carte de citit!",
     "rating": 5
+  },
+  {
+    "user": "Rares",
+    "book": "Călătoria creştinului",
+    "comment": "O carte cu un impact spiritual foarte mare.",
+    "rating": 5
+  },
+  {
+    "user": "Rares",
+    "book": "Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2",
+    "comment": "Foarte tare!",
+    "rating": 3
   }
 ]

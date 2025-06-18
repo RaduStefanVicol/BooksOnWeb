@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Cărți Citite în Grup – Books on Web</title>
+  <link rel="stylesheet" href="citire-grup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <nav class="navbar">
+    <div class="logo">👥 Citire în Grup</div>
+    <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
+  </nav>
+
+  <h2>Cărți selectate pentru lectură în grup</h2>
+  <section id="groupReadingList" class="book-list"></section>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const list = document.getElementById("groupReadingList");
+
+    let rawUser = localStorage.getItem("user");
+    let username = "";
+
+    try {
+      username = rawUser.includes('"') ? JSON.parse(rawUser).username : rawUser;
+    } catch {
+      username = rawUser;
+    }
+
+    if (!username) {
+      alert("Nu ești autentificat. Te redirecționăm.");
+      window.location.href = "/Autentificare/login.html";
+      return;
+    }
+
+    fetch("/api/group-reading")
+            .then(res => res.json())
+            .then(books => {
+              list.innerHTML = "";
+              books.reverse().forEach(book => {
+                const card = document.createElement("div");
+                card.className = "book-card";
+                card.innerHTML = `
+            <strong>${book.title}</strong><br>
+            <span>de ${book.author} (${book.year || "-"})</span><br>
+            <em>${book.category || ""}</em><br>
+          `;
+
+                const totalInput = document.createElement("input");
+                totalInput.type = "number";
+                totalInput.placeholder = "Total pagini";
+
+                const currentInput = document.createElement("input");
+                currentInput.type = "number";
+                currentInput.placeholder = "Pagini citite";
+
+                const liveCalcText = document.createElement("div");
+                liveCalcText.style.marginTop = "6px";
+                liveCalcText.style.fontStyle = "italic";
+
+                function updateLiveCalc() {
+                  const total = parseInt(totalInput.value);
+                  const current = parseInt(currentInput.value);
+                  if (!isNaN(total) && !isNaN(current) && total > 0 && current >= 0 && current <= total) {
+                    const percent = ((current / total) * 100).toFixed(1);
+                    liveCalcText.textContent = `Ai citit: ${percent}% din carte`;
+                  } else {
+                    liveCalcText.textContent = '';
+                  }
+                }
+
+                totalInput.addEventListener('input', updateLiveCalc);
+                currentInput.addEventListener('input', updateLiveCalc);
+
+                const progressText = document.createElement("div");
+                progressText.style.marginTop = "6px";
+                progressText.style.fontWeight = "bold";
+
+                const allProgressDiv = document.createElement("div");
+                allProgressDiv.style.marginTop = "10px";
+                allProgressDiv.style.fontSize = "14px";
+                allProgressDiv.style.opacity = "0.9";
+                allProgressDiv.innerHTML = "<em>Progresul grupului:</em>";
+
+                const saveBtn = document.createElement("button");
+                saveBtn.textContent = "Salvează progresul";
+                saveBtn.onclick = () => {
+                  const total = parseInt(totalInput.value);
+                  const current = parseInt(currentInput.value);
+
+                  if (isNaN(total) || isNaN(current) || total <= 0 || current < 0 || current > total) {
+                    alert("Date invalide");
+                    return;
+                  }
+
+                  const payload = {
+                    user: username,
+                    title: book.title,
+                    author: book.author,
+                    totalPages: total,
+                    currentPage: current
+                  };
+
+                  console.log("Saving progres:", payload);
+
+                  fetch("/api/group-progress", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                  }).then(() => {
+
+                    loadProgress();
+                    loadGroupProgress();
+                  });
+                };
+
+                function loadProgress() {
+                  fetch(`/api/group-progress?title=${encodeURIComponent(book.title)}&author=${encodeURIComponent(book.author)}&user=${encodeURIComponent(username)}`)
+                          .then(res => res.json())
+                          .then(data => {
+                            if (data && data.totalPages) {
+                              const percent = ((data.currentPage / data.totalPages) * 100).toFixed(1);
+                              progressText.textContent = `Progresul tău: ${percent}% (${data.currentPage}/${data.totalPages})`;
+                              totalInput.value = data.totalPages;
+                              currentInput.value = data.currentPage;
+                              updateLiveCalc();
+                            } else {
+                              progressText.textContent = "Fără progres salvat.";
+                            }
+                          });
+                }
+
+                function loadGroupProgress() {
+                  allProgressDiv.innerHTML = "<em>Progresul grupului:</em>";
+
+                  fetch(`/api/group-progress/all?title=${encodeURIComponent(book.title)}&author=${encodeURIComponent(book.author)}`)
+                          .then(res => res.json())
+                          .then(entries => {
+                            if (entries.length > 0) {
+                              let totalPercent = 0;
+                              entries.forEach(entry => {
+                                const percent = ((entry.currentPage / entry.totalPages) * 100).toFixed(1);
+                                totalPercent += parseFloat(percent);
+                                const userLine = document.createElement("div");
+                                userLine.textContent = `📘 ${entry.user}: ${percent}% (${entry.currentPage}/${entry.totalPages})`;
+                                allProgressDiv.appendChild(userLine);
+                              });
+                              const avg = (totalPercent / entries.length).toFixed(1);
+                              const avgLine = document.createElement("div");
+                              avgLine.innerHTML = `<strong>📊 Media grupului: ${avg}%</strong>`;
+                              allProgressDiv.prepend(avgLine);
+                            } else {
+                              const none = document.createElement("div");
+                              none.textContent = "Nimeni altcineva nu a raportat progres.";
+                              allProgressDiv.appendChild(none);
+                            }
+                          });
+                }
+
+                loadProgress();
+                loadGroupProgress();
+
+                card.appendChild(totalInput);
+                card.appendChild(currentInput);
+                card.appendChild(liveCalcText);
+                card.appendChild(saveBtn);
+                card.appendChild(progressText);
+                card.appendChild(allProgressDiv);
+                list.appendChild(card);
+              });
+            })
+            .catch(err => {
+              console.error("Eroare la /api/group-reading:", err);
+            });
+  });
+</script>
+</body>
+</html>

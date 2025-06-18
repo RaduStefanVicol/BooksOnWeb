@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Cărți Favorite – Books on Web</title>
+  <link rel="stylesheet" href="favorite.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <nav class="navbar">
+    <div class="logo">Cărți Favorite</div>
+    <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
+  </nav>
+
+  <h2>Lista cărților favorite</h2>
+  <section id="favoriteList" class="book-list"></section>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const list = document.getElementById("favoriteList");
+
+    function loadFavoriteList() {
+      fetch("/api/favorite")
+              .then(res => res.json())
+              .then(books => {
+                list.innerHTML = "";
+                books.reverse().forEach(book => {
+                  const card = document.createElement("div");
+                  card.className = "book-card";
+                  card.innerHTML = `
+                            <strong>${book.title}</strong><br>
+                            <span>de ${book.author} (${book.year || "-"})</span><br>
+                            <em>${book.category || ""}</em><br>
+                        `;
+
+                  const removeBtn = document.createElement("button");
+                  removeBtn.textContent = "🗑️ Elimină";
+                  removeBtn.onclick = () => {
+
+
+                    const params = new URLSearchParams({
+                      title: book.title,
+                      author: book.author
+                    });
+
+                    fetch(`/api/favorite?${params.toString()}`, {
+                      method: "DELETE"
+                    })
+                            .then(res => res.json())
+                            .then(() => loadFavoriteList())
+                            .catch(() => alert("Eroare la eliminare"));
+                  };
+
+                  card.appendChild(removeBtn);
+                  list.appendChild(card);
+                });
+              });
+    }
+
+    loadFavoriteList();
+  });
+</script>
+</body>
+</html>

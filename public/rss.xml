@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Books on Web - Noutăți</title>
+    <link>http://localhost:3000/</link>
+    <description>Ultimele cărți adăugate în platformă</description>
+    
+      <item>
+        <title>Ion</title>
+        <description>Categorie: roman - Autor: Liviu Rebreanu</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Luceafarul</title>
+        <description>Categorie: Romantism - Autor: Mihai Eminescu</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Harap Alb</title>
+        <description>Categorie: basm - Autor: Ion Creanga</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Enigma Otiliei</title>
+        <description>Categorie: nuvela - Autor: George Calinescu</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Biblia</title>
+        <description>Categorie: Spirituala - Autor: Dumnezeu</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Programare Avansata</title>
+        <description>Categorie: Informatica - Autor: Cristian Frasinaru</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Călătoria creştinului</title>
+        <description>Categorie: Nespecificat - Autor: John Bunyan</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2</title>
+        <description>Categorie: Juvenile Nonfiction - Autor: Ben Brooks</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+      </item>
+    
+  </channel>
+</rss>

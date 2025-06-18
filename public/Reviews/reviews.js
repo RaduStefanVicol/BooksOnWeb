@@ -55,13 +55,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function applySort() {
         const sortBy = sortSelect.value;
+
         if (sortBy === "high") {
             filteredReviews.sort((a, b) => b.rating - a.rating);
         } else if (sortBy === "low") {
             filteredReviews.sort((a, b) => a.rating - b.rating);
         } else {
-            filteredReviews.reverse(); // default: cele mai recente
+            filteredReviews = [...filteredReviews].reverse();
         }
+
         currentIndex = 0;
         reviewList.innerHTML = "";
         renderMoreReviews();
@@ -73,11 +75,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const card = document.createElement("div");
             card.className = "review-card";
             card.innerHTML = `
-        <h3>${review.book}</h3>
-        <div class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
-        <p>${review.comment}</p>
-        <div class="meta">Scris de ${review.user}</div>
-      `;
+                <h3>${review.book}</h3>
+                <div class="stars">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+                <p>${review.comment}</p>
+                <div class="meta">Scris de ${review.user}</div>
+            `;
             reviewList.appendChild(card);
         });
         currentIndex += BATCH_SIZE;

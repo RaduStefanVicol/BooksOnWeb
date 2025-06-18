@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Cărți de Citit – Books on Web</title>
+    <link rel="stylesheet" href="citire.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">Cărți de Citit</div>
+        <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
+    </nav>
+
+    <h2>Lista de lectură</h2>
+    <section id="readingList" class="book-list"></section>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const list = document.getElementById("readingList");
+
+        function loadReadingList() {
+            fetch("/api/reading")
+                .then(res => res.json())
+                .then(books => {
+                    list.innerHTML = "";
+                    books.reverse().forEach(book => {
+                        const card = document.createElement("div");
+                        card.className = "book-card";
+                        card.innerHTML = `
+                            <strong>${book.title}</strong><br>
+                            <span>de ${book.author} (${book.year || "-"})</span><br>
+                            <em>${book.category || ""}</em><br>
+                        `;
+
+                        //  Elimină
+                        const removeBtn = document.createElement("button");
+                        removeBtn.textContent = "🗑Elimină";
+                        removeBtn.onclick = () => {
+                            if (!confirm(`Sigur vrei să elimini „${book.title}”?`)) return;
+
+                            const params = new URLSearchParams({
+                                title: book.title,
+                                author: book.author
+                            });
+
+                            fetch(`/api/reading?${params.toString()}`, {
+                                method: "DELETE"
+                            })
+                                .then(res => res.json())
+                                .then(() => loadReadingList())
+                                .catch(() => alert("Eroare la eliminare"));
+                        };
+
+
+                        const progressBtn = document.createElement("button");
+                        progressBtn.textContent = "Progres";
+                        progressBtn.onclick = () => {
+                            progressSection.style.display =
+                                progressSection.style.display === "none" ? "block" : "none";
+                        };
+
+                        // Secțiune progres
+                        const progressSection = document.createElement("div");
+                        progressSection.style.display = "none";
+                        progressSection.style.marginTop = "10px";
+                        progressSection.innerHTML = `
+                            <label>Număr total de pagini:</label><br>
+                            <input type="number" class="total-pages" placeholder="Ex: 300"><br>
+                            <label>Pagina actuală:</label><br>
+                            <input type="number" class="current-page" placeholder="Ex: 45"><br>
+                            <button class="calc-progress">Calculează</button><br>
+                            <div class="progress-output" style="margin-top: 6px; font-weight: bold;"></div>
+                        `;
+
+                        // Calculează progres
+                        progressSection.querySelector(".calc-progress").onclick = () => {
+                            const total = parseInt(progressSection.querySelector(".total-pages").value);
+                            const current = parseInt(progressSection.querySelector(".current-page").value);
+                            const output = progressSection.querySelector(".progress-output");
+
+                            if (isNaN(total) || isNaN(current) || total <= 0 || current < 0 || current > total) {
+                                output.textContent = "Date invalide.";
+                                return;
+                            }
+
+                            const percent = ((current / total) * 100).toFixed(1);
+                            output.textContent = `Ai citit ${percent}% din carte `;
+                        };
+
+                        // Salvează progres
+                        const saveBtn = document.createElement("button");
+                        saveBtn.textContent = "💾 Salvează progresul";
+                        saveBtn.onclick = () => {
+                            const total = parseInt(progressSection.querySelector(".total-pages").value);
+                            const current = parseInt(progressSection.querySelector(".current-page").value);
+
+                            fetch("/api/progress", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    title: book.title,
+                                    author: book.author,
+                                    totalPages: total,
+                                    currentPage: current
+                                })
+                            });
+                        };
+
+                        progressSection.appendChild(saveBtn);
+
+                        // Grupăm butoanele
+                        const buttonGroup = document.createElement("div");
+                        buttonGroup.style.display = "flex";
+                        buttonGroup.style.justifyContent = "center";
+                        buttonGroup.style.gap = "10px";
+                        buttonGroup.appendChild(removeBtn);
+                        buttonGroup.appendChild(progressBtn);
+
+                        card.appendChild(buttonGroup);
+                        card.appendChild(progressSection);
+                        list.appendChild(card);
+                    });
+                });
+        }
+
+        loadReadingList();
+    });
+</script>
+</body>
+</html>

@@ -79,14 +79,12 @@ form button:hover {
     background-color: #059669;
 }
 
-/* Book list grid */
 .book-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
-/* Book card styling */
 .book-card {
     background: rgba(255, 255, 255, 0.08);
     padding: 20px;
@@ -122,6 +120,35 @@ form button:hover {
     opacity: 0.9;
 }
 
+/* Butoane Citește / Favorite */
+.book-card button {
+    margin-top: 8px;
+    margin-right: 6px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.book-card button:first-of-type {
+    background-color: #3b82f6;
+}
+
+.book-card button:first-of-type:hover {
+    background-color: #2563eb;
+}
+
+.book-card button:last-of-type {
+    background-color: #f43f5e;
+}
+
+.book-card button:last-of-type:hover {
+    background-color: #be123c;
+}
+
 /* Progress toggle button */
 .toggle-progress {
     margin-top: 12px;
@@ -139,7 +166,6 @@ form button:hover {
     background-color: #2563eb;
 }
 
-/* Progress section */
 .progress-section {
     display: none;
     width: 100%;

@@ -1,0 +1,113 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
+    color: white;
+    padding: 40px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.back-btn {
+    color: white;
+    text-decoration: none;
+    background: rgba(255,255,255,0.1);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.book-card {
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    animation: slideUp 0.4s ease;
+}
+
+.book-card strong {
+    display: block;
+    font-size: 18px;
+}
+
+.book-card button {
+    margin: 6px 4px 0 4px;
+    padding: 6px 12px;
+    background-color: #ef4444;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.book-card button:hover {
+    background-color: #dc2626;
+}
+
+.book-card em {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.book-card input[type="number"] {
+    width: 90%;
+    padding: 6px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+}
+
+.book-card .calc-progress {
+    padding: 6px 12px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.book-card .calc-progress:hover {
+    background-color: #059669;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
