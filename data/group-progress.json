@@ -33,5 +33,26 @@
     "author": "George Calinescu",
     "totalPages": 43,
     "currentPage": 3
+  },
+  {
+    "user": "Rares",
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "totalPages": 433,
+    "currentPage": 234
+  },
+  {
+    "user": "Rares",
+    "title": "Luceafarul",
+    "author": "Mihai Eminescu",
+    "totalPages": 544,
+    "currentPage": 55
+  },
+  {
+    "user": "Emanuel",
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "totalPages": 433,
+    "currentPage": 23
   }
 ]

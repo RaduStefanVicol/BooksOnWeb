@@ -67,7 +67,7 @@ h2 {
 
 .bar {
     height: 100%;
-    background: #22c55e;
+    background: blueviolet;
     border-radius: 8px 0 0 8px;
     transition: width 0.4s;
 }

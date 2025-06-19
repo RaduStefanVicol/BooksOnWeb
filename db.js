@@ -5,11 +5,42 @@ const db = new sqlite3.Database('./data/database.db');
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE,
-            password TEXT
+                                             id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                             username TEXT UNIQUE,
+                                             password TEXT
         )
     `);
+
+    db.run(`
+        CREATE TABLE IF NOT EXISTS favorite (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            title TEXT,
+            author TEXT,
+            year TEXT,
+            category TEXT
+        )
+    `);
+    db.run(`
+    CREATE TABLE IF NOT EXISTS reading (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        title TEXT,
+        author TEXT,
+        year TEXT,
+        category TEXT
+    )
+`);
+    db.run(`
+    CREATE TABLE IF NOT EXISTS progress (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        title TEXT,
+        author TEXT,
+        totalPages INTEGER,
+        currentPage INTEGER
+    )
+`);
 });
 
 module.exports = db;

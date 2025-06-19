@@ -34,7 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     card.innerHTML = `
                         <strong>${book.title}</strong>
                         <span>de ${book.author} (${book.year})</span><br>
-                        <em>${book.category}</em>`;
+                        <em>${book.category}</em><br>
+                        <div>Editura: ${book.publisher || "Nespecificată"}</div>
+                        <div>Ediție: ${book.edition || "-"}</div>
+                        <div>${book.related && book.related.length ? `<em>Cărți înrudite:</em> ${book.related.join(", ")}` : ""}</div>
+                    `;
                     list.appendChild(card);
                 });
             });
@@ -47,7 +51,10 @@ document.addEventListener("DOMContentLoaded", () => {
             title: form.title.value,
             author: form.author.value,
             year: parseInt(form.year.value),
-            category: form.category.value
+            category: form.category.value,
+            publisher: form.publisher.value,
+            edition: form.edition.value,
+            related: form.related.value.split(",").map(s => s.trim()).filter(Boolean)
         };
 
         await fetch("/api/books", {

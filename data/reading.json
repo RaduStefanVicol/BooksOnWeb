@@ -12,12 +12,6 @@
     "category": "Spirituala"
   },
   {
-    "title": "Ion",
-    "author": "Liviu Rebreanu",
-    "year": 1820,
-    "category": "roman"
-  },
-  {
     "title": "Enigma Otiliei",
     "author": "George Calinescu",
     "year": 1918,
@@ -30,15 +24,31 @@
     "category": "Nespecificat"
   },
   {
-    "title": "Luceafarul",
-    "author": "Mihai Eminescu",
-    "year": 1879,
-    "category": "Romantism"
-  },
-  {
     "title": "Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2",
     "author": "Ben Brooks",
     "year": "2020-08-07",
     "category": "Juvenile Nonfiction"
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "year": 1990,
+    "category": "Filosofica",
+    "publisher": "Arthur",
+    "edition": "4",
+    "related": [
+      "Diamond"
+    ]
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "year": 1990,
+    "category": "Filosofica",
+    "publisher": "Arthur",
+    "edition": "4",
+    "related": [
+      "Diamond"
+    ]
   }
 ]

@@ -28,5 +28,16 @@
     "author": "Henry Law",
     "year": "2024-10-01",
     "category": "Religion"
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "year": 1990,
+    "category": "Filosofica",
+    "publisher": "Arthur",
+    "edition": "4",
+    "related": [
+      "Diamond"
+    ]
   }
 ]

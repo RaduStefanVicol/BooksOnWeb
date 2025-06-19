@@ -9,7 +9,7 @@
         <title>Ion</title>
         <description>Categorie: roman - Autor: Liviu Rebreanu</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -17,7 +17,7 @@
         <title>Luceafarul</title>
         <description>Categorie: Romantism - Autor: Mihai Eminescu</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -25,7 +25,7 @@
         <title>Harap Alb</title>
         <description>Categorie: basm - Autor: Ion Creanga</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -33,7 +33,7 @@
         <title>Enigma Otiliei</title>
         <description>Categorie: nuvela - Autor: George Calinescu</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -41,7 +41,7 @@
         <title>Biblia</title>
         <description>Categorie: Spirituala - Autor: Dumnezeu</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -49,7 +49,7 @@
         <title>Programare Avansata</title>
         <description>Categorie: Informatica - Autor: Cristian Frasinaru</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -57,7 +57,7 @@
         <title>Călătoria creştinului</title>
         <description>Categorie: Nespecificat - Autor: John Bunyan</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
 
@@ -65,7 +65,23 @@
         <title>Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2</title>
         <description>Categorie: Juvenile Nonfiction - Autor: Ben Brooks</description>
         <link>http://localhost:3000/</link>
-        <pubDate>Wed, 18 Jun 2025 16:28:43 GMT</pubDate>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Harry Potter</title>
+        <description>Categorie: Filosofica - Autor: J.K Rowling</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
+      </item>
+    
+
+      <item>
+        <title>Little Jimmy</title>
+        <description>Categorie: Nespecificat - Autor: Jimmy Swinnerton</description>
+        <link>http://localhost:3000/</link>
+        <pubDate>Thu, 19 Jun 2025 15:07:56 GMT</pubDate>
       </item>
     
   </channel>

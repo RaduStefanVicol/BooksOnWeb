@@ -81,7 +81,7 @@ h2 {
 
 .book-card button {
     margin-top: 10px;
-    background-color: #059669;
+    background-color: blueviolet;
     color: white;
     padding: 8px 14px;
     border: none;
@@ -91,9 +91,7 @@ h2 {
     transition: background 0.3s;
 }
 
-.book-card button:hover {
-    background-color: #059669;
-}
+
 
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(10px); }

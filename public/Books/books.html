@@ -20,6 +20,14 @@
         </div>
     </nav>
 
+    <!-- Formular de filtrare -->
+    <form id="filterForm" style="display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap;">
+        <select id="categoryFilter"><option value="">Categorie</option></select>
+        <select id="authorFilter"><option value="">Autor</option></select>
+        <select id="publisherFilter"><option value="">Editură</option></select>
+        <select id="yearFilter"><option value="">An</option></select>
+    </form>
+
     <h2>Cărțile adăugate de admin</h2>
     <section id="bookList" class="book-list"></section>
 

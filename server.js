@@ -29,6 +29,22 @@ function generateRSS(books) {
     fs.writeFileSync('./public/rss.xml', rssContent);
 }
 
+function getUsernameFromRequest(req) {
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
+    const token = authHeader.split(' ')[1];
+    try {
+        const payload = jwt.verify(token, JWT_SECRET);
+        return payload.username;
+    } catch {
+        return null;
+    }
+}
+
+function getUserFilePath(type, username) {
+    return `./data/${type}-${username}.json`;
+}
+
 const server = http.createServer((req, res) => {
     if (req.url === '/api/register' && req.method === 'POST') {
         let body = '';
@@ -113,119 +129,209 @@ const server = http.createServer((req, res) => {
     }
 
     if (req.url === '/api/reading' && req.method === 'POST') {
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
         let body = '';
         req.on('data', chunk => { body += chunk; });
         req.on('end', () => {
             const book = JSON.parse(body);
-            const filePath = './data/reading.json';
-            if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-            const reading = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-            const exists = reading.find(b => b.title === book.title && b.author === book.author);
-            if (!exists) reading.push(book);
-            fs.writeFileSync(filePath, JSON.stringify(reading, null, 2));
-            res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Carte adăugată pentru citire' }));
+            const checkSql = `SELECT * FROM reading WHERE username = ? AND title = ? AND author = ?`;
+            db.get(checkSql, [username, book.title, book.author], (err, row) => {
+                if (err) {
+                    res.writeHead(500);
+                    return res.end(JSON.stringify({ error: 'Eroare la verificare' }));
+                }
+                if (!row) {
+                    const insertSql = `INSERT INTO reading (username, title, author, year, category) VALUES (?, ?, ?, ?, ?)`;
+                    db.run(insertSql, [username, book.title, book.author, book.year, book.category], err => {
+                        if (err) {
+                            res.writeHead(500);
+                            return res.end(JSON.stringify({ error: 'Eroare la salvare' }));
+                        }
+                        res.writeHead(201, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ message: 'Carte adăugată pentru citire' }));
+                    });
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Cartea este deja în citire' }));
+                }
+            });
         });
         return;
     }
 
+
     if (req.url === '/api/reading' && req.method === 'GET') {
-        const filePath = './data/reading.json';
-        if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-        const reading = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(reading));
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
+        const sql = `SELECT title, author, year, category FROM reading WHERE username = ?`;
+        db.all(sql, [username], (err, rows) => {
+            if (err) {
+                res.writeHead(500);
+                return res.end(JSON.stringify({ error: 'Eroare la citire' }));
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(rows));
+        });
         return;
     }
+
     if (req.url.startsWith('/api/reading') && req.method === 'DELETE') {
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
         const urlObj = new URL(req.url, `http://${req.headers.host}`);
         const title = urlObj.searchParams.get('title');
         const author = urlObj.searchParams.get('author');
 
-        const filePath = './data/reading.json';
-        if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-
-        let reading = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        reading = reading.filter(b => !(b.title === title && b.author === author));
-
-        fs.writeFileSync(filePath, JSON.stringify(reading, null, 2));
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Carte eliminată din citire' }));
+        const sql = `DELETE FROM reading WHERE username = ? AND title = ? AND author = ?`;
+        db.run(sql, [username, title, author], function(err) {
+            if (err) {
+                res.writeHead(500);
+                return res.end(JSON.stringify({ error: 'Eroare la ștergere' }));
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Carte eliminată din citire' }));
+        });
         return;
     }
 
     if (req.url === '/api/progress' && req.method === 'POST') {
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
         let body = '';
         req.on('data', chunk => { body += chunk; });
         req.on('end', () => {
             const entry = JSON.parse(body);
-            const filePath = './data/progress.json';
+            const checkSql = `SELECT * FROM progress WHERE username = ? AND title = ? AND author = ?`;
+            db.get(checkSql, [username, entry.title, entry.author], (err, row) => {
+                if (err) {
+                    res.writeHead(500);
+                    return res.end(JSON.stringify({ error: 'Eroare la verificare' }));
+                }
 
-            if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-            let progress = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                const updateSql = `
+                UPDATE progress SET totalPages = ?, currentPage = ?
+                WHERE username = ? AND title = ? AND author = ?
+            `;
+                const insertSql = `
+                INSERT INTO progress (username, title, author, totalPages, currentPage)
+                VALUES (?, ?, ?, ?, ?)
+            `;
 
-            // înlocuiește dacă există deja
-            const index = progress.findIndex(p => p.title === entry.title && p.author === entry.author);
-            if (index !== -1) {
-                progress[index] = entry;
-            } else {
-                progress.push(entry);
-            }
-
-            fs.writeFileSync(filePath, JSON.stringify(progress, null, 2));
-            res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Progres salvat' }));
+                if (row) {
+                    db.run(updateSql, [entry.totalPages, entry.currentPage, username, entry.title, entry.author], err => {
+                        if (err) {
+                            res.writeHead(500);
+                            return res.end(JSON.stringify({ error: 'Eroare la actualizare' }));
+                        }
+                        res.writeHead(201, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ message: 'Progres actualizat' }));
+                    });
+                } else {
+                    db.run(insertSql, [username, entry.title, entry.author, entry.totalPages, entry.currentPage], err => {
+                        if (err) {
+                            res.writeHead(500);
+                            return res.end(JSON.stringify({ error: 'Eroare la inserare' }));
+                        }
+                        res.writeHead(201, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ message: 'Progres salvat' }));
+                    });
+                }
+            });
         });
         return;
     }
+
     if (req.url === '/api/progress' && req.method === 'GET') {
-        const filePath = './data/progress.json';
-        if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-        const progress = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(progress));
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
+        const sql = `SELECT title, author, totalPages, currentPage FROM progress WHERE username = ?`;
+        db.all(sql, [username], (err, rows) => {
+            if (err) {
+                res.writeHead(500);
+                return res.end(JSON.stringify({ error: 'Eroare la citire progres' }));
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(rows));
+        });
         return;
     }
+
 
 
     if (req.url === '/api/favorite' && req.method === 'POST') {
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
         let body = '';
-        req.on('data', chunk => { body += chunk; });
+        req.on('data', chunk => body += chunk);
         req.on('end', () => {
             const book = JSON.parse(body);
-            const filePath = './data/favorite.json';
-            if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-            const favorites = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-            const exists = favorites.find(b => b.title === book.title && b.author === book.author);
-            if (!exists) favorites.push(book);
-            fs.writeFileSync(filePath, JSON.stringify(favorites, null, 2));
-            res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Carte adăugată la favorite' }));
+            const sqlCheck = `SELECT * FROM favorite WHERE username = ? AND title = ? AND author = ?`;
+            db.get(sqlCheck, [username, book.title, book.author], (err, row) => {
+                if (err) {
+                    res.writeHead(500);
+                    return res.end(JSON.stringify({ error: 'Eroare la verificare' }));
+                }
+                if (!row) {
+                    const sql = `INSERT INTO favorite (username, title, author, year, category) VALUES (?, ?, ?, ?, ?)`;
+                    db.run(sql, [username, book.title, book.author, book.year, book.category], err => {
+                        if (err) {
+                            res.writeHead(500);
+                            return res.end(JSON.stringify({ error: 'Eroare la salvare' }));
+                        }
+                        res.writeHead(201, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ message: 'Carte adăugată la favorite' }));
+                    });
+                } else {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Cartea există deja la favorite' }));
+                }
+            });
         });
         return;
     }
 
+
     if (req.url === '/api/favorite' && req.method === 'GET') {
-        const filePath = './data/favorite.json';
-        if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-        const favorites = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(favorites));
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
+        const sql = `SELECT title, author, year, category FROM favorite WHERE username = ?`;
+        db.all(sql, [username], (err, rows) => {
+            if (err) {
+                res.writeHead(500);
+                return res.end(JSON.stringify({ error: 'Eroare la citire' }));
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(rows));
+        });
         return;
     }
 
+
     if (req.url.startsWith('/api/favorite') && req.method === 'DELETE') {
+        const username = getUsernameFromRequest(req);
+        if (!username) return res.writeHead(401).end('Unauthorized');
+
         const urlObj = new URL(req.url, `http://${req.headers.host}`);
         const title = urlObj.searchParams.get('title');
         const author = urlObj.searchParams.get('author');
 
-        const filePath = './data/favorite.json';
-        if (!fs.existsSync(filePath)) fs.writeFileSync(filePath, '[]');
-        let favorites = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-        favorites = favorites.filter(b => !(b.title === title && b.author === author));
-        fs.writeFileSync(filePath, JSON.stringify(favorites, null, 2));
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Carte eliminată din favorite' }));
+        const sql = `DELETE FROM favorite WHERE username = ? AND title = ? AND author = ?`;
+        db.run(sql, [username, title, author], function(err) {
+            if (err) {
+                res.writeHead(500);
+                return res.end(JSON.stringify({ error: 'Eroare la ștergere' }));
+            }
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Carte eliminată din favorite' }));
+        });
         return;
     }
 

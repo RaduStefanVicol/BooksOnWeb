@@ -20,9 +20,12 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const list = document.getElementById("favoriteList");
+    const token = localStorage.getItem("token");
 
     function loadFavoriteList() {
-      fetch("/api/favorite")
+      fetch("/api/favorite", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
               .then(res => res.json())
               .then(books => {
                 list.innerHTML = "";
@@ -30,29 +33,53 @@
                   const card = document.createElement("div");
                   card.className = "book-card";
                   card.innerHTML = `
-                            <strong>${book.title}</strong><br>
-                            <span>de ${book.author} (${book.year || "-"})</span><br>
-                            <em>${book.category || ""}</em><br>
-                        `;
+              <strong>${book.title}</strong><br>
+              <span>de ${book.author} (${book.year || "-"})</span><br>
+              <em>${book.category || ""}</em><br>
+            `;
+
+                  const readBtn = document.createElement("button");
+                  readBtn.textContent = "Citește";
+                  readBtn.onclick = () => {
+                    fetch("/api/reading", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                      },
+                      body: JSON.stringify(book)
+                    }).then(() => window.location.href = "/Books/citire.html");
+                  };
+
+                  const groupBtn = document.createElement("button");
+                  groupBtn.textContent = "Citire în grup";
+                  groupBtn.onclick = () => {
+                    fetch("/api/group-reading", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(book)
+                    }).then(() => window.location.href = "/Books/citire-grup.html");
+                  };
 
                   const removeBtn = document.createElement("button");
-                  removeBtn.textContent = "🗑️ Elimină";
+                  removeBtn.textContent = "Elimină";
                   removeBtn.onclick = () => {
-
-
                     const params = new URLSearchParams({
                       title: book.title,
                       author: book.author
                     });
 
                     fetch(`/api/favorite?${params.toString()}`, {
-                      method: "DELETE"
+                      method: "DELETE",
+                      headers: { Authorization: `Bearer ${token}` }
                     })
                             .then(res => res.json())
                             .then(() => loadFavoriteList())
                             .catch(() => alert("Eroare la eliminare"));
                   };
 
+                  card.appendChild(readBtn);
+                  card.appendChild(groupBtn);
                   card.appendChild(removeBtn);
                   list.appendChild(card);
                 });

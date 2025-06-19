@@ -3,48 +3,113 @@
     "title": "Ion",
     "author": "Liviu Rebreanu",
     "year": 1820,
-    "category": "roman"
+    "category": "roman",
+    "publisher": "Editura Minerva",
+    "edition": "Ediția a II-a",
+    "related": [
+      "Pădurea Spânzuraților",
+      "Ciuleandra"
+    ]
   },
   {
     "title": "Luceafarul",
     "author": "Mihai Eminescu",
     "year": 1879,
-    "category": "Romantism"
+    "category": "Romantism",
+    "publisher": "Editura Junimea",
+    "edition": "Ediția princeps",
+    "related": [
+      "Floare albastră",
+      "Scrisoarea I"
+    ]
   },
   {
     "title": "Harap Alb",
     "author": "Ion Creanga",
     "year": 1920,
-    "category": "basm"
+    "category": "basm",
+    "publisher": "Editura Tineretului",
+    "edition": "Ediția a III-a",
+    "related": [
+      "Povestea lui Stan Pățitul",
+      "Amintiri din copilărie"
+    ]
   },
   {
     "title": "Enigma Otiliei",
     "author": "George Calinescu",
     "year": 1918,
-    "category": "nuvela"
+    "category": "nuvela",
+    "publisher": "Editura Cartea Românească",
+    "edition": "Ediția originală",
+    "related": [
+      "Scrinul negru",
+      "Bietul Ioanide"
+    ]
   },
   {
     "title": "Biblia",
     "author": "Dumnezeu",
     "year": 1888,
-    "category": "Spirituala"
+    "category": "Spirituala",
+    "publisher": "Societatea Biblică",
+    "edition": "Versiunea Cornilescu",
+    "related": [
+      "Noul Testament",
+      "Psalmii"
+    ]
   },
   {
     "title": "Programare Avansata",
     "author": "Cristian Frasinaru",
     "year": 2010,
-    "category": "Informatica"
+    "category": "Informatica",
+    "publisher": "Editura Tehnică",
+    "edition": "Ediția 2021",
+    "related": [
+      "Structuri de date",
+      "Algoritmi Fundamentali"
+    ]
   },
   {
     "title": "Călătoria creştinului",
     "author": "John Bunyan",
     "year": "1900*",
-    "category": "Nespecificat"
+    "category": "Nespecificat",
+    "publisher": "Editura Agape",
+    "edition": "Reeditare 1999",
+    "related": [
+      "Chemarea cerului",
+      "Creștinul și lupta spirituală"
+    ]
   },
   {
     "title": "Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2",
     "author": "Ben Brooks",
     "year": "2020-08-07",
-    "category": "Juvenile Nonfiction"
+    "category": "Juvenile Nonfiction",
+    "publisher": "Editura Litera",
+    "edition": "Ediția 2020",
+    "related": [
+      "Fete Rebele",
+      "Puterea Gândirii Pozitive"
+    ]
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "year": 1990,
+    "category": "Filosofica",
+    "publisher": "Arthur",
+    "edition": "4",
+    "related": [
+      "Diamond"
+    ]
+  },
+  {
+    "title": "Little Jimmy",
+    "author": "Jimmy Swinnerton",
+    "year": "1922",
+    "category": "Nespecificat"
   }
 ]

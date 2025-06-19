@@ -20,9 +20,12 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const list = document.getElementById("readingList");
+        const token = localStorage.getItem("token");
 
         function loadReadingList() {
-            fetch("/api/reading")
+            fetch("/api/reading", {
+                headers: { Authorization: `Bearer ${token}` }
+            })
                 .then(res => res.json())
                 .then(books => {
                     list.innerHTML = "";
@@ -30,30 +33,27 @@
                         const card = document.createElement("div");
                         card.className = "book-card";
                         card.innerHTML = `
-                            <strong>${book.title}</strong><br>
-                            <span>de ${book.author} (${book.year || "-"})</span><br>
-                            <em>${book.category || ""}</em><br>
-                        `;
+              <strong>${book.title}</strong><br>
+              <span>de ${book.author} (${book.year || "-"})</span><br>
+              <em>${book.category || ""}</em><br>
+            `;
 
-                        //  Elimină
                         const removeBtn = document.createElement("button");
-                        removeBtn.textContent = "🗑Elimină";
+                        removeBtn.textContent = "Elimină";
                         removeBtn.onclick = () => {
-                            if (!confirm(`Sigur vrei să elimini „${book.title}”?`)) return;
-
                             const params = new URLSearchParams({
                                 title: book.title,
                                 author: book.author
                             });
 
                             fetch(`/api/reading?${params.toString()}`, {
-                                method: "DELETE"
+                                method: "DELETE",
+                                headers: { Authorization: `Bearer ${token}` }
                             })
                                 .then(res => res.json())
                                 .then(() => loadReadingList())
                                 .catch(() => alert("Eroare la eliminare"));
                         };
-
 
                         const progressBtn = document.createElement("button");
                         progressBtn.textContent = "Progres";
@@ -62,56 +62,63 @@
                                 progressSection.style.display === "none" ? "block" : "none";
                         };
 
-                        // Secțiune progres
                         const progressSection = document.createElement("div");
                         progressSection.style.display = "none";
                         progressSection.style.marginTop = "10px";
                         progressSection.innerHTML = `
-                            <label>Număr total de pagini:</label><br>
-                            <input type="number" class="total-pages" placeholder="Ex: 300"><br>
-                            <label>Pagina actuală:</label><br>
-                            <input type="number" class="current-page" placeholder="Ex: 45"><br>
-                            <button class="calc-progress">Calculează</button><br>
-                            <div class="progress-output" style="margin-top: 6px; font-weight: bold;"></div>
-                        `;
+              <label>Număr total de pagini:</label><br>
+              <input type="number" class="total-pages" placeholder="Ex: 300"><br>
+              <label>Pagina actuală:</label><br>
+              <input type="number" class="current-page" placeholder="Ex: 45"><br>
+              <div class="progress-output" style="margin-top: 6px; font-weight: bold;"></div>
+            `;
 
-                        // Calculează progres
-                        progressSection.querySelector(".calc-progress").onclick = () => {
-                            const total = parseInt(progressSection.querySelector(".total-pages").value);
-                            const current = parseInt(progressSection.querySelector(".current-page").value);
-                            const output = progressSection.querySelector(".progress-output");
+                        const totalInput = progressSection.querySelector(".total-pages");
+                        const currentInput = progressSection.querySelector(".current-page");
+                        const output = progressSection.querySelector(".progress-output");
+
+                        function updateProgress() {
+                            const total = parseInt(totalInput.value);
+                            const current = parseInt(currentInput.value);
+                            if (!isNaN(total) && !isNaN(current) && total > 0 && current >= 0 && current <= total) {
+                                const percent = ((current / total) * 100).toFixed(1);
+                                output.textContent = `Ai citit ${percent}% din carte!`;
+                            } else {
+                                output.textContent = "";
+                            }
+                        }
+
+                        totalInput.addEventListener("input", updateProgress);
+                        currentInput.addEventListener("input", updateProgress);
+
+                        const saveBtn = document.createElement("button");
+                        saveBtn.textContent = "Salvează progresul";
+                        saveBtn.onclick = () => {
+                            const total = parseInt(totalInput.value);
+                            const current = parseInt(currentInput.value);
 
                             if (isNaN(total) || isNaN(current) || total <= 0 || current < 0 || current > total) {
-                                output.textContent = "Date invalide.";
+                                alert("Date invalide.");
                                 return;
                             }
 
-                            const percent = ((current / total) * 100).toFixed(1);
-                            output.textContent = `Ai citit ${percent}% din carte `;
-                        };
-
-                        // Salvează progres
-                        const saveBtn = document.createElement("button");
-                        saveBtn.textContent = "💾 Salvează progresul";
-                        saveBtn.onclick = () => {
-                            const total = parseInt(progressSection.querySelector(".total-pages").value);
-                            const current = parseInt(progressSection.querySelector(".current-page").value);
-
                             fetch("/api/progress", {
                                 method: "POST",
-                                headers: { "Content-Type": "application/json" },
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    Authorization: `Bearer ${token}`
+                                },
                                 body: JSON.stringify({
                                     title: book.title,
                                     author: book.author,
                                     totalPages: total,
                                     currentPage: current
                                 })
-                            });
+                            }).then(() => {});
                         };
 
                         progressSection.appendChild(saveBtn);
 
-                        // Grupăm butoanele
                         const buttonGroup = document.createElement("div");
                         buttonGroup.style.display = "flex";
                         buttonGroup.style.justifyContent = "center";

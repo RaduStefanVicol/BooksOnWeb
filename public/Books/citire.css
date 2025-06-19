@@ -66,15 +66,15 @@ h2 {
 .book-card button {
     margin: 6px 4px 0 4px;
     padding: 6px 12px;
-    background-color: #ef4444;
+    background-color: white;
     border: none;
-    color: white;
+    color: black;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s;
 }
 .book-card button:hover {
-    background-color: #dc2626;
+    background-color: blueviolet;
 }
 
 .book-card em {

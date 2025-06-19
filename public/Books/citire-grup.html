@@ -9,7 +9,7 @@
 <body>
 <div class="container">
   <nav class="navbar">
-    <div class="logo">👥 Citire în Grup</div>
+    <div class="logo"> Citire în Grup</div>
     <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
   </nav>
 
@@ -145,12 +145,12 @@
                                 const percent = ((entry.currentPage / entry.totalPages) * 100).toFixed(1);
                                 totalPercent += parseFloat(percent);
                                 const userLine = document.createElement("div");
-                                userLine.textContent = `📘 ${entry.user}: ${percent}% (${entry.currentPage}/${entry.totalPages})`;
+                                userLine.textContent = ` ${entry.user}: ${percent}% (${entry.currentPage}/${entry.totalPages})`;
                                 allProgressDiv.appendChild(userLine);
                               });
                               const avg = (totalPercent / entries.length).toFixed(1);
                               const avgLine = document.createElement("div");
-                              avgLine.innerHTML = `<strong>📊 Media grupului: ${avg}%</strong>`;
+                              avgLine.innerHTML = `<strong> Media grupului: ${avg}%</strong>`;
                               allProgressDiv.prepend(avgLine);
                             } else {
                               const none = document.createElement("div");

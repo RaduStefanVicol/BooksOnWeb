@@ -128,25 +128,35 @@ form button:hover {
     border: none;
     border-radius: 8px;
     font-weight: bold;
-    color: white;
+    color: black;
     cursor: pointer;
     transition: 0.3s;
+
+}
+
+/* Buton Favorite */
+.btn-fav {
+    background-color: white;
+    color: #1f2937;
+}
+.btn-fav:hover {
+    background-color: blueviolet;
 }
 
 .book-card button:first-of-type {
-    background-color: #3b82f6;
+    background-color: white;
 }
 
 .book-card button:first-of-type:hover {
-    background-color: #2563eb;
+    background-color: blueviolet;
 }
 
 .book-card button:last-of-type {
-    background-color: #f43f5e;
+    background-color: white;
 }
 
 .book-card button:last-of-type:hover {
-    background-color: #be123c;
+    background-color: blueviolet;
 }
 
 /* Progress toggle button */
@@ -192,25 +202,51 @@ form button:hover {
     margin-bottom: 8px;
 }
 
-.calculate-progress {
-    padding: 8px 12px;
-    background-color: #10b981;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-}
 
-.calculate-progress:hover {
-    background-color: #059669;
-}
+
 
 .progress-output {
     margin-top: 8px;
     font-weight: bold;
     color: #fbbf24;
+}
+
+#filterForm {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+#filterForm select {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    background-color: white;
+    color: #333;
+    min-width: 150px;
+    cursor: pointer;
+}
+.library-card {
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.library-card:hover {
+    transform: scale(1.03);
 }
 
 /* Animations */

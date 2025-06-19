@@ -28,5 +28,28 @@
     "author": "Justus Christoph Schomer, J. Winnemer",
     "year": "1690",
     "category": "Nespecificat"
+  },
+  {
+    "title": "Luceafarul",
+    "author": "Mihai Eminescu",
+    "year": 1879,
+    "category": "Romantism",
+    "publisher": "Editura Junimea",
+    "edition": "Ediția princeps",
+    "related": [
+      "Floare albastră",
+      "Scrisoarea I"
+    ]
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "year": 1990,
+    "category": "Filosofica",
+    "publisher": "Arthur",
+    "edition": "4",
+    "related": [
+      "Diamond"
+    ]
   }
 ]

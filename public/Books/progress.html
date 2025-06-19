@@ -20,8 +20,11 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const list = document.getElementById("progressList");
+    const token = localStorage.getItem("token");
 
-    fetch("/api/progress")
+    fetch("/api/progress", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
             .then(res => res.json())
             .then(entries => {
               list.innerHTML = "";
@@ -31,14 +34,14 @@
                 const card = document.createElement("div");
                 card.className = "book-card";
                 card.innerHTML = `
-                        <strong>${book.title}</strong><br>
-                        <span>de ${book.author}</span><br>
-                        <em>${book.currentPage} / ${book.totalPages} pagini</em><br>
-                        <div class="bar-container">
-                            <div class="bar" style="width: ${percent}%;"></div>
-                        </div>
-                        <div class="percent">${percent}% citit</div>
-                    `;
+            <strong>${book.title}</strong><br>
+            <span>de ${book.author}</span><br>
+            <em>${book.currentPage} / ${book.totalPages} pagini</em><br>
+            <div class="bar-container">
+              <div class="bar" style="width: ${percent}%;"></div>
+            </div>
+            <div class="percent">${percent}% citit</div>
+          `;
                 list.appendChild(card);
               });
             });

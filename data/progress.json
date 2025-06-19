@@ -8,13 +8,25 @@
   {
     "title": "Ion",
     "author": "Liviu Rebreanu",
-    "totalPages": 555,
-    "currentPage": 32
+    "totalPages": 544,
+    "currentPage": 65
   },
   {
     "title": "Povesti Pentru Baieti Care Au Curajul Sa Fie Altfel Vol. 2",
     "author": "Ben Brooks",
     "totalPages": 211,
     "currentPage": 67
+  },
+  {
+    "title": "Harry Potter",
+    "author": "J.K Rowling",
+    "totalPages": 555,
+    "currentPage": 43
+  },
+  {
+    "title": "Programare Avansata",
+    "author": "Cristian Frasinaru",
+    "totalPages": 433,
+    "currentPage": 124
   }
 ]

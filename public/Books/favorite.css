@@ -69,11 +69,11 @@ h2 {
 }
 
 .book-card button {
-    margin-top: 10px;
+    margin: 6px 6px 0 0;
     padding: 6px 12px;
-    background-color: #f43f5e;
+    background-color: white;
     border: none;
-    color: white;
+    color: black;
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
@@ -81,7 +81,7 @@ h2 {
 }
 
 .book-card button:hover {
-    background-color: #e11d48;
+    background-color: blueviolet;
 }
 
 @keyframes slideUp {

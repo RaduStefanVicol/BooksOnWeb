@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Books on Web - Scholarly HTML Report</title>
+    <link rel="stylesheet" href="https://w3c.github.io/scholarly-html/css/scholarly.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        img { display: block; margin: 20px auto; width: 990px; }
+    </style>
+    <script src="https://w3c.github.io/scholarly-html/js/scholarly.min.js"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Books on Web – Raport Scholarly HTML</h1>
+</header>
+
+<section id="introducere" role="doc-introduction">
+    <h2>Introducere</h2>
+
+    <section id="Authors">
+        <h3>Autori</h3>
+        Acest document prezintă aplicația web Books on Web, realizată de:
+        <span typeof="schema:Person">
+      <span property="schema:name">Luculescu Emanuel</span>
+      și
+      <span property="schema:name">Vicol Radu-Ștefan</span>
+    </span>
+    </section>
+
+    <section id="Document-conventions">
+        <h3>Convenții</h3>
+        <p>Documentul respectă structura <a href="#ieee-template">IEEE System Requirements Specification Template</a>.</p>
+    </section>
+
+    <section id="intended-audience">
+        <h3>Public țintă</h3>
+        <ul>
+            <li><strong>Dezvoltatori</strong> – pentru mentenanță și extindere</li>
+            <li><strong>Utilizatori finali</strong> – cititori, elevi, profesori</li>
+            <li><strong>Testeri QA</strong> – pentru testarea funcționalităților</li>
+        </ul>
+    </section>
+
+    <section id="purpose">
+        <h3>Scopul aplicației</h3>
+        <p>Books on Web este o platformă pentru gestionarea lecturilor, marcarea favoritelor, urmărirea progresului și citirea în grup. Include integrare cu API-uri externe și export date.</p>
+    </section>
+</section>
+
+<section id="paleta-culori">
+    <h3>Paletă de culori</h3>
+    <p>Design minimalist, cu accent pe fundaluri pastelate și contrast ridicat pentru lizibilitate. Stil inspirat din NoDesign.dev și UI Faces.</p>
+</section>
+
+<section id="arhitectura">
+    <h2>Arhitectura aplicației</h2>
+    <p>Aplicația este împărțită pe componente Frontend și Backend. Diagrama de mai jos prezintă modul de comunicare dintre utilizator, interfața web, server și baza de date:</p>
+    <img src="Diagram_C4.drawio.png" alt="Diagrama C4 - nivel container">
+    <p>Structura detaliată a componentelor este prezentată în schema următoare:</p>
+    <img src="DiagramaC4.png" alt="Diagrama completă - Frontend și Backend">
+</section>
+
+<section id="implementation-details">
+    <h2>Detalii de implementare</h2>
+    <p>Frontend-ul este construit cu HTML, CSS și JavaScript pur. Backend-ul este implementat în Node.js cu stocare locală în SQLite. JWT este folosit pentru autentificare.</p>
+
+    <section id="database">
+        <h2>Baza de date</h2>
+        <p>Se folosesc patru tabele principale: users, favorite, reading, progress. Fiecare înregistrează datele per utilizator folosind coloana <code>username</code>.</p>
+        <img src="db_diagram.png" alt="Diagrama C4 - nivel container">
+    </section>
+</section>
+
+<section id="implementation-details">
+    <h2>Detalii de implementare</h2>
+    <p>Frontend-ul este construit cu HTML, CSS și JavaScript pur. Backend-ul este implementat în Node.js cu stocare locală în SQLite. JWT este folosit pentru autentificare.</p>
+
+    <section id="database">
+        <h2>Baza de date</h2>
+        <p>Se folosesc patru tabele principale: users, favorite, reading, progress. Fiecare înregistrează datele per utilizator folosind coloana <code>username</code>.</p>
+    </section>
+</section>
+
+<section id="used-technologies">
+    <h2>Tehnologii utilizate</h2>
+    <ul>
+        <li>Frontend: HTML5, CSS3, JavaScript</li>
+        <li>Backend: Node.js (http, fs, jwt, sqlite3)</li>
+        <li>Bază de date: SQLite 3</li>
+        <li>Autentificare: JWT</li>
+        <li>API-uri: Google Books API, Mockaroo</li>
+    </ul>
+
+    <section id="security">
+        <h2>Securitate</h2>
+        <p>Fiecare cerere către backend validează JWT-ul. Datele utilizatorului sunt separate și protejate per cont. Nu sunt expuse informații globale.</p>
+    </section>
+</section>
+
+<section id="features">
+    <h2>Funcționalități</h2>
+    <ul>
+        <li>Înregistrare și autentificare cu JWT a utilizatorilor si administatorului.</li>
+        <img src="register.png" alt="Înregistrare">
+        <img src="login.png" alt="Autentificare">
+
+        <li>Pagina adminului unde acesta poate adauga carti pentru utilizatori.</li>
+        <img src="admin.png" alt="Administrare cărți de către admin">
+
+        <li>Vizualizare și interacțiune cu cărțile disponibile introduse de administrator!</li>
+        <img src="books.png" alt="Vizualizare cărți în homepage">
+
+        <li>Integrare Google Books API pentru completarea automată a cartior pe care un utilizator doreste sa caute o carte.</li>
+        <img src="google book-api.png" alt="Căutare Google Books">
+
+        <li>Interfață prietenoasă, acolo unde utilizatorul poate sa citeasca carti, sa ofere recenzii si sa vada statistici pe baza recenziilor.</li>
+        <img src="homepage.png" alt="Homepage personalizat">
+
+        <li>Statistici și recenzii pe baza recenziilor</li>
+        <img src="statistici.png" alt="Prima pagină cu funcționalități">
+    </ul>
+
+</section>
+
+<section id="features">
+    <h2>Funcționalități individuale</h2>
+
+    <section id="feature-details">
+
+
+        <h3><code>index.html</code> – Pagina principală</h3>
+        <p>
+            Aceasta este pagina principală. Utilizatorul poate accesa rapid funcționalitățile aplicației din meniul de navigare:
+        <ul>
+            <li>Cărți disponibile</li>
+            <li>Recenzii</li>
+            <li>Statistici</li>
+            <li>Logout</li>
+        </ul>
+        Pagina este personalizată în funcție de utilizatorul logat și îi oferă acces vizual rapid la toate zonele aplicației.
+        </p>
+
+        <h3> <code>login.html</code> și <code>register.html</code> – Autentificare / Înregistrare</h3>
+        <p><strong>register.html:</strong> Utilizatorul introduce numele, parola și confirmarea parolei. Dacă datele sunt valide, contul este creat și salvat în SQLite.</p>
+        <p><strong>login.html:</strong> Utilizatorul se autentifică, primește un JWT și acesta este salvat în localStorage pentru autentificare ulterioară.</p>
+
+        <h3> <code>books.html</code> – Cărți</h3>
+        <p>Listă completă cu cărțile adăugate de admin. Utilizatorii pot căuta, filtra și marca o carte ca "Citește", "Favorite" sau "Citire în grup".</p>
+
+        <h3><code>citire.html</code> – Cărți de citit</h3>
+        <p>Afișează cărțile marcate de utilizator pentru citire. Se poate seta progresul și elimina cartea din listă.</p>
+
+        <h3><code>favorite.html</code> – Cărți favorite</h3>
+        <p>Vizualizare și gestionare cărți favorite personale. Se poate lansa citirea sau eliminarea unei cărți favorite.</p>
+
+        <h3> <code>progress.html</code> – Progres</h3>
+        <p>Se afișează vizual progresul per carte: pagini parcurse, procent, bară de progres. Datele sunt salvate per utilizator în baza SQLite.</p>
+
+        <h3>Integrare Google Books API</h3>
+        <p>Utilizatorul poate căuta cărți externe. Dacă cartea nu există, aplicația sugerează biblioteci reale folosind date JSON și Google Books API.</p>
+    </section>
+</section>
+
+
+<section id="biblio-references">
+    <h3>Referințe</h3>
+    <ol>
+        <li id="ieee-template"><a href="https://github.com/rick4470/IEEE-SRS-Tempate">IEEE Template</a></li>
+        <li><a href="https://w3c.github.io/scholarly-html/">Scholarly HTML Standard</a></li>
+        <li><a href="https://nodejs.org/">Node.js</a></li>
+        <li><a href="https://www.sqlite.org/">SQLite</a></li>
+        <li><a href="https://books.google.com/">Google Books API</a></li>
+        <li><a href="https://mockaroo.com/">Mockaroo</a></li>
+    </ol>
+</section>
+
+</body>
+</html>
