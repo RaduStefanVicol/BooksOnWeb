@@ -18,14 +18,10 @@ if (loginForm) {
             const result = await res.json();
 
             if (res.ok) {
-                // Curățăm orice veche cheie "username" din greșeală
                 localStorage.removeItem("username");
 
-                //  Salvăm datele corecte
                 localStorage.setItem("token", result.token);
                 localStorage.setItem("user", username);
-
-                // 🔐 Redirecționare în funcție de rol
                 if (username === "admin") {
                     window.location.href = "/Administrator/pagAdmin.html";
                 } else {

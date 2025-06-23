@@ -1,113 +1,188 @@
+/* === Reset & Bază === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
     color: white;
-    padding: 40px;
     min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    animation: fadeIn 0.6s ease-in-out;
+.citire-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.navbar {
+/* === Navbar === */
+.citire-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
-.logo {
-    font-size: 26px;
-    font-weight: 700;
+.citire-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
 }
 
-.back-btn {
+.citire-back {
+    background: rgba(255, 255, 255, 0.1);
     color: white;
-    text-decoration: none;
-    background: rgba(255,255,255,0.1);
+    border: none;
     padding: 8px 16px;
     border-radius: 8px;
-    transition: 0.3s;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
 }
 
-.back-btn:hover {
-    background: rgba(255,255,255,0.25);
+.citire-back:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
-h2 {
+/* === Subtitle === */
+.citire-subtitle {
     text-align: center;
-    margin-bottom: 30px;
+    font-size: 1.8rem;
 }
 
-.book-list {
+/* === Listă de cărți === */
+.citire-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
-.book-card {
-    background: rgba(255,255,255,0.08);
+.citire-card {
+    background: rgba(255, 255, 255, 0.08);
     padding: 20px;
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
+    border-radius: 12px;
     text-align: center;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     animation: slideUp 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.book-card strong {
-    display: block;
+.citire-card strong {
     font-size: 18px;
 }
 
-.book-card button {
-    margin: 6px 4px 0 4px;
-    padding: 6px 12px;
+.citire-card span {
+    font-size: 14px;
+}
+
+.citire-card em {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.button-group button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
     background-color: white;
-    border: none;
     color: black;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
 }
-.book-card button:hover {
+
+.button-group button:hover {
     background-color: blueviolet;
-}
-
-.book-card em {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-.book-card input[type="number"] {
-    width: 90%;
-    padding: 6px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    border: none;
-    font-size: 14px;
-}
-
-.book-card .calc-progress {
-    padding: 6px 12px;
-    background-color: #10b981;
     color: white;
-    border: none;
+}
+
+/* === Progress Section === */
+.progress-section {
+    display: none;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.progress-section label {
+    display: block;
+    margin: 8px 0 4px;
+    font-size: 14px;
+    color: #fcd34d;
+}
+
+.progress-section input {
+    width: 100%;
+    padding: 8px;
     border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.progress-output {
+    margin-top: 8px;
     font-weight: bold;
+    color: #fbbf24;
+}
+
+.progress-section button {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    background-color: white;
+    color: black;
     cursor: pointer;
-    margin-top: 6px;
+    transition: background 0.3s;
 }
 
-.book-card .calc-progress:hover {
-    background-color: #059669;
+.progress-section button:hover {
+    background-color: blueviolet;
+    color: white;
 }
 
-/* Animations */
+/* === Animations === */
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsive === */
+@media (min-width: 768px) {
+    .citire-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .citire-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1440px) {
+    .citire-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

@@ -38,15 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedBook = bookFilter.value;
         const filtered = selectedBook === "all" ? allReviews : allReviews.filter(r => r.book === selectedBook);
 
-        // Număr total recenzii
+
         totalReviews.textContent = filtered.length;
 
-        // Media rating
+
         const ratings = filtered.map(r => r.rating).filter(r => typeof r === 'number' && !isNaN(r));
         const avg = ratings.length > 0 ? (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(2) : "–";
         averageRating.textContent = avg;
 
-        // Utilizatori unici
         const unique = new Set(filtered.map(r => r.user)).size;
         uniqueUsers.textContent = unique;
 
@@ -78,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Tabel recenzii
+
         reviewTableBody.innerHTML = "";
         filtered.forEach(r => {
             const row = document.createElement("tr");

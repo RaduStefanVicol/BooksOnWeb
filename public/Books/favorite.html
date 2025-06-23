@@ -2,19 +2,20 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cărți Favorite – Books on Web</title>
   <link rel="stylesheet" href="favorite.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-  <nav class="navbar">
-    <div class="logo">Cărți Favorite</div>
-    <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
+<div class="favorite-container">
+  <nav class="favorite-navbar">
+    <div class="favorite-logo">📖 Cărți Favorite</div>
+    <a href="/Books/books.html" class="favorite-back">← Înapoi la cărți</a>
   </nav>
 
-  <h2>Lista cărților favorite</h2>
-  <section id="favoriteList" class="book-list"></section>
+  <h2 class="favorite-subtitle">Lista cărților favorite</h2>
+  <section id="favoriteList" class="favorite-list"></section>
 </div>
 
 <script>
@@ -31,12 +32,12 @@
                 list.innerHTML = "";
                 books.reverse().forEach(book => {
                   const card = document.createElement("div");
-                  card.className = "book-card";
+                  card.className = "favorite-card";
                   card.innerHTML = `
-              <strong>${book.title}</strong><br>
-              <span>de ${book.author} (${book.year || "-"})</span><br>
-              <em>${book.category || ""}</em><br>
-            `;
+            <strong>${book.title}</strong><br>
+            <span>de ${book.author} (${book.year || "-"})</span><br>
+            <em>${book.category || ""}</em><br>
+          `;
 
                   const readBtn = document.createElement("button");
                   readBtn.textContent = "Citește";
@@ -78,9 +79,13 @@
                             .catch(() => alert("Eroare la eliminare"));
                   };
 
-                  card.appendChild(readBtn);
-                  card.appendChild(groupBtn);
-                  card.appendChild(removeBtn);
+                  const buttonGroup = document.createElement("div");
+                  buttonGroup.className = "button-group";
+                  buttonGroup.appendChild(readBtn);
+                  buttonGroup.appendChild(groupBtn);
+                  buttonGroup.appendChild(removeBtn);
+
+                  card.appendChild(buttonGroup);
                   list.appendChild(card);
                 });
               });

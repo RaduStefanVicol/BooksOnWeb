@@ -6,29 +6,28 @@ const db = require('./db'); // baza de date SQLite
 const JWT_SECRET = 'super-secret-jwt-key';
 const PORT = 3000;
 
+const { create } = require('xmlbuilder2');
 function generateRSS(books) {
-    const rssItems = books.map(book => `
-      <item>
-        <title>${book.title}</title>
-        <description>Categorie: ${book.category} - Autor: ${book.author}</description>
-        <link>http://localhost:3000/</link>
-        <pubDate>${new Date().toUTCString()}</pubDate>
-      </item>
-    `).join('\n');
+    const rssObj = {
+        rss: {
+            '@version': '2.0',
+            channel: {
+                title: 'Books on Web - Noutăți',
+                link: 'http://localhost:3000/',
+                description: 'Ultimele cărți adăugate în platformă',
+                item: books.map(book => ({
+                    title: book.title,
+                    description: `Categorie: ${book.category} - Autor: ${book.author}`,
+                    link: 'http://localhost:3000/',
+                    pubDate: new Date().toUTCString()
+                }))
+            }
+        }
+    };
+    const xml = create(rssObj).end({ prettyPrint: true });
 
-    const rssContent = `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
-  <channel>
-    <title>Books on Web - Noutăți</title>
-    <link>http://localhost:3000/</link>
-    <description>Ultimele cărți adăugate în platformă</description>
-    ${rssItems}
-  </channel>
-</rss>`;
-
-    fs.writeFileSync('./public/rss.xml', rssContent);
+    fs.writeFileSync('./public/rss.xml', xml);
 }
-
 function getUsernameFromRequest(req) {
     const authHeader = req.headers['authorization'];
     if (!authHeader || !authHeader.startsWith('Bearer ')) return null;
@@ -41,58 +40,88 @@ function getUsernameFromRequest(req) {
     }
 }
 
-function getUserFilePath(type, username) {
-    return `./data/${type}-${username}.json`;
-}
 
 const server = http.createServer((req, res) => {
+    const bcrypt = require('bcrypt'); // pune asta sus de tot în fișier, dacă nu ai deja
+    const saltRounds = 12;
     if (req.url === '/api/register' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => { body += chunk; });
-        req.on('end', () => {
-            const { username, password } = JSON.parse(body);
-            if (!username || !password) {
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ error: 'Username și parolă necesare' }));
-            }
-            const sql = `INSERT INTO users (username, password) VALUES (?, ?)`;
-            db.run(sql, [username, password], function(err) {
-                if (err) {
-                    if (err.message.includes("UNIQUE")) {
-                        res.writeHead(409, { 'Content-Type': 'application/json' });
-                        return res.end(JSON.stringify({ error: 'Utilizatorul există deja' }));
-                    }
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    return res.end(JSON.stringify({ error: 'Eroare server' }));
+
+        req.on('end', async () => {
+            try {
+                const { username, password } = JSON.parse(body);
+
+                if (!username || !password) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Username și parolă necesare' }));
                 }
-                res.writeHead(201, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Înregistrare reușită' }));
-            });
+
+                const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+                const sql = `INSERT INTO users (username, password) VALUES (?, ?)`;
+                db.run(sql, [username, hashedPassword], function(err) {
+                    if (err) {
+                        if (err.message.includes("UNIQUE")) {
+                            res.writeHead(409, { 'Content-Type': 'application/json' });
+                            return res.end(JSON.stringify({ error: 'Utilizatorul există deja' }));
+                        }
+                        res.writeHead(500, { 'Content-Type': 'application/json' });
+                        return res.end(JSON.stringify({ error: 'Eroare server' }));
+                    }
+
+                    res.writeHead(201, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ message: 'Înregistrare reușită' }));
+                });
+
+            } catch (err) {
+                console.error("Eroare la înregistrare:", err);
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Eroare la procesare date' }));
+            }
         });
+
         return;
     }
-
     if (req.url === '/api/login' && req.method === 'POST') {
         let body = '';
         req.on('data', chunk => { body += chunk; });
+
         req.on('end', () => {
             const { username, password } = JSON.parse(body);
-            const sql = `SELECT * FROM users WHERE username = ? AND password = ?`;
-            db.get(sql, [username, password], (err, user) => {
+
+            const sql = `SELECT * FROM users WHERE username = ?`;
+            db.get(sql, [username], async (err, user) => {
                 if (err) {
                     res.writeHead(500, { 'Content-Type': 'application/json' });
                     return res.end(JSON.stringify({ error: 'Eroare server' }));
                 }
-                if (user) {
+
+                if (!user) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Utilizator inexistent' }));
+                }
+
+                try {
+                    const validPassword = await bcrypt.compare(password, user.password);
+
+                    if (!validPassword) {
+                        res.writeHead(401, { 'Content-Type': 'application/json' });
+                        return res.end(JSON.stringify({ error: 'Parolă greșită' }));
+                    }
+
                     const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: '2h' });
+
                     res.writeHead(200, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ message: 'Autentificare reușită', token }));
-                } else {
-                    res.writeHead(401, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ error: 'Nume sau parolă incorecte' }));
+                } catch (err) {
+                    console.error("Eroare la validare parolă:", err);
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Eroare server la autentificare' }));
                 }
             });
         });
+
         return;
     }
 

@@ -2,28 +2,28 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Înregistrare - Books on Web</title>
     <link rel="stylesheet" href="register.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="register-container">
-    <h1>Înregistrare</h1>
-    <p class="subtitle">Creează-ți un cont și pornește aventura lecturii!</p>
+    <h1 class="register-title">Înregistrare</h1>
+    <p class="register-subtitle">Creează-ți un cont și pornește aventura lecturii!</p>
 
-    <form id="registerForm">
+    <form id="registerForm" class="register-form">
         <input type="text" id="username" name="username" placeholder="Nume utilizator" required>
         <input type="password" id="password" name="password" placeholder="Parolă" required>
         <input type="password" id="confirm" name="confirm" placeholder="Confirmare parolă" required>
         <button type="submit" class="btn-register">Creează cont</button>
     </form>
 
-    <div id="register-error" class="error-message"></div>
-    <div id="register-success" class="success-message"></div>
+    <div id="register-error" class="register-error"></div>
+    <div id="register-success" class="register-success"></div>
 
-
-    <p class="login">Ai deja cont? <a href="login.html">Autentifică-te aici</a></p>
-    <p class="footer">Creat cu pasiune pentru iubitorii de cărți.</p>
+    <p class="register-login">Ai deja cont? <a href="login.html">Autentifică-te aici</a></p>
+    <p class="register-footer">Creat cu pasiune pentru iubitorii de cărți.</p>
 </div>
 
 <script src="register.js"></script>

@@ -1,3 +1,4 @@
+/* === Reset & Bază === */
 * {
     margin: 0;
     padding: 0;
@@ -9,73 +10,221 @@ body {
     background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
     color: white;
     min-height: 100vh;
-    padding: 40px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    animation: fadeIn 0.6s ease-in-out;
+.books-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.navbar {
+/* === Navbar === */
+.books-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.logo {
-    font-size: 28px;
+.books-logo {
+    font-size: 1.5rem;
     font-weight: 800;
 }
 
-.logout-btn, .back-btn {
+.books-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.books-btn, .books-logout {
     background: rgba(255,255,255,0.1);
     color: white;
     border: none;
     padding: 8px 16px;
-    margin-left: 10px;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
     text-decoration: none;
-    transition: 0.3s;
+    transition: background 0.3s;
 }
 
-.logout-btn:hover, .back-btn:hover {
+.books-btn:hover, .books-logout:hover {
     background: rgba(255,255,255,0.25);
 }
 
-h1, h2 {
+/* === Filtru === */
+.books-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.books-filter select {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    background-color: white;
+    color: #333;
+    min-width: 150px;
+    cursor: pointer;
+}
+
+/* === Subtitluri === */
+.books-subtitle {
     text-align: center;
-    margin: 20px 0;
+    font-size: 1.5rem;
 }
 
-form {
+/* === Listă cărți === */
+.books-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 40px;
+    grid-template-columns: 1fr;
+    gap: 20px;
 }
 
-form input, form button {
-    padding: 12px;
+.books-card {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: slideUp 0.4s ease;
+    transition: transform 0.3s ease;
+}
+
+.books-card:hover {
+    transform: translateY(-5px);
+}
+
+.books-card img {
+    width: 100px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.books-card strong {
+    font-size: 18px;
+}
+
+.books-card em {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.books-card button {
+    margin-top: 8px;
+    margin-right: 6px;
+    padding: 8px 14px;
     border: none;
     border-radius: 8px;
-    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-form button {
-    grid-column: span 2;
-    background-color: #34d399;
+.btn-fav {
+    background-color: white;
+    color: #1f2937;
+}
+
+.btn-fav:hover,
+.books-card button:hover {
+    background-color: blueviolet;
+}
+
+/* === Progress === */
+.toggle-progress {
+    margin-top: 12px;
+    padding: 8px 14px;
+    background-color: #3b82f6;
     color: white;
-    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.3s;
 }
 
-form button:hover {
+.toggle-progress:hover {
+    background-color: #2563eb;
+}
+
+.progress-section {
+    display: none;
+    width: 100%;
+    margin-top: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.progress-section label {
+    display: block;
+    margin: 8px 0 4px;
+    font-size: 14px;
+    color: #fcd34d;
+}
+
+.progress-section input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.progress-output {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #fbbf24;
+}
+
+/* === Căutare === */
+.books-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.books-search input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    min-width: 250px;
+}
+
+.books-search button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    background-color: #34d399;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.books-search button:hover {
     background-color: #059669;
 }
 
@@ -249,13 +398,27 @@ form button:hover {
     transform: scale(1.03);
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-
+/* === Animations === */
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === Breakpoints === */
+@media (min-width: 768px) {
+    .books-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .books-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1440px) {
+    .books-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

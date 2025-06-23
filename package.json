@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "xmlbuilder2": "^3.1.1"
   }
 }

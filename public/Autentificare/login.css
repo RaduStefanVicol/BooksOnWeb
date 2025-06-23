@@ -23,25 +23,25 @@ body {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
-h1 {
+.login-title {
     font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
 }
 
-.subtitle {
+.login-subtitle {
     font-size: 1rem;
     color: #666;
     margin-bottom: 30px;
 }
 
-form {
+.login-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-input {
+.login-form input {
     padding: 12px;
     font-size: 1rem;
     border-radius: 12px;
@@ -49,7 +49,7 @@ input {
     transition: border 0.2s;
 }
 
-input:focus {
+.login-form input:focus {
     border-color: #7f00ff;
     outline: none;
 }
@@ -70,20 +70,47 @@ input:focus {
     background-color: #00a77b;
 }
 
-.register {
+.login-error {
+    margin-top: 10px;
+    color: #e53935;
+    font-size: 0.9rem;
+}
+
+.login-register {
     margin-top: 20px;
     font-size: 0.9rem;
     color: #555;
 }
 
-.register a {
+.login-register a {
     color: #e53935;
     font-weight: 600;
     text-decoration: none;
 }
 
-.footer {
+.login-footer {
     margin-top: 30px;
     font-size: 0.85rem;
     color: #888;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .login-container {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .login-title {
+        font-size: 1.8rem;
+    }
+
+    .btn-login {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .login-footer {
+        font-size: 0.75rem;
+    }
 }

@@ -23,25 +23,25 @@ body {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
-h1 {
+.register-title {
     font-size: 2rem;
     color: #333;
     margin-bottom: 10px;
 }
 
-.subtitle {
+.register-subtitle {
     font-size: 1rem;
     color: #666;
     margin-bottom: 30px;
 }
 
-form {
+.register-form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-input {
+.register-form input {
     padding: 12px;
     font-size: 1rem;
     border-radius: 12px;
@@ -49,7 +49,7 @@ input {
     transition: border 0.2s;
 }
 
-input:focus {
+.register-form input:focus {
     border-color: #7f00ff;
     outline: none;
 }
@@ -70,33 +70,55 @@ input:focus {
     background-color: #c62828;
 }
 
-.login {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #555;
+.register-error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
 }
 
-.login a {
-    color: #3f51b5;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.footer {
-    margin-top: 30px;
-    font-size: 0.85rem;
-    color: #888;
-}
-.success-message {
+.register-success {
     color: green;
     font-weight: bold;
     margin-top: 10px;
     text-align: center;
 }
 
-.error-message {
-    color: red;
-    font-weight: bold;
-    margin-top: 10px;
-    text-align: center;
+.register-login {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.register-login a {
+    color: #3f51b5;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-footer {
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .register-container {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .register-title {
+        font-size: 1.8rem;
+    }
+
+    .btn-register {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .register-footer {
+        font-size: 0.75rem;
+    }
 }

@@ -1,3 +1,4 @@
+/* === Reset & Bază === */
 * {
     margin: 0;
     padding: 0;
@@ -6,38 +7,41 @@
 
 body {
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
+    background: linear-gradient(135deg, #7b2ff7, #f107a3);
     color: white;
     min-height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 40px;
+    padding: 20px;
 }
 
-.container {
-    max-width: 1200px;
+.homepage-container {
     width: 100%;
-    animation: fadeIn 0.6s ease-in-out;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 
-.navbar {
+/* === Navbar === */
+.homepage-navbar {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 50px;
+    flex-wrap: wrap;
 }
 
-.logo {
-    font-size: 28px;
+.homepage-logo {
+    font-size: 1.5rem;
     font-weight: 800;
-    color: #fff;
 }
 
-.logout-btn {
-    background-color: rgba(255, 255, 255, 0.1);
+.homepage-logout {
+    background: rgba(255, 255, 255, 0.1);
     color: white;
-    border: none;
+    border: 2px solid white;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
@@ -45,57 +49,119 @@ body {
     transition: background 0.3s ease;
 }
 
-.logout-btn:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+.homepage-logout:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
-.content h1.welcome {
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 40px;
+/* === Conținut principal === */
+.homepage-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.homepage-welcome {
+    font-size: 1.8rem;
     text-align: center;
 }
 
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
+/* === Carduri === */
+.homepage-cards {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
-.card {
-    background: rgba(255, 255, 255, 0.08);
+.homepage-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 24px;
     border-radius: 16px;
-    padding: 30px;
     text-align: center;
-    text-decoration: none;
     color: white;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    text-decoration: none;
     transition: transform 0.3s ease, background 0.3s ease;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 500px;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    background: rgba(255, 255, 255, 0.15);
+.homepage-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
 }
 
-.card .icon {
-    font-size: 40px;
+.homepage-card .icon {
+    font-size: 2rem;
     margin-bottom: 10px;
 }
 
-.card h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 600;
+.homepage-card h2 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
 }
 
-.card p {
-    font-size: 15px;
+.homepage-card p {
+    font-size: 0.95rem;
     opacity: 0.9;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to   { opacity: 1; transform: translateY(0); }
+/* === Breakpoints === */
+
+/* ≥480px */
+@media (min-width: 480px) {
+    .homepage-welcome {
+        font-size: 2rem;
+    }
+}
+
+/* ≥768px */
+@media (min-width: 768px) {
+    .homepage-cards {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .homepage-card {
+        max-width: 45%;
+    }
+}
+
+/* ≥1024px */
+@media (min-width: 1024px) {
+    .homepage-card {
+        max-width: 30%;
+    }
+
+    .homepage-welcome {
+        font-size: 2.2rem;
+    }
+}
+
+/* ≥1440px */
+@media (min-width: 1440px) {
+    .homepage-card {
+        padding: 32px;
+    }
+
+    .homepage-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .homepage-card p {
+        font-size: 1rem;
+    }
+
+    .homepage-logo {
+        font-size: 2rem;
+    }
+
+    .homepage-logout {
+        font-size: 1rem;
+    }
 }

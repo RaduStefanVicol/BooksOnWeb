@@ -2,48 +2,49 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recenzii - Books on Web</title>
     <link rel="stylesheet" href="reviews.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <nav class="navbar">
-        <div class="logo">📝 Recenzii</div>
-        <div>
-            <a href="/Homepage/homepage.html" class="back-btn">🏠 Înapoi</a>
-            <button id="logout" class="logout-btn">Logout</button>
+<div class="reviews-container">
+    <nav class="reviews-navbar">
+        <div class="reviews-logo">📚 Recenzii</div>
+        <div class="reviews-controls">
+            <a href="/Homepage/homepage.html" class="reviews-back"> Înapoi</a>
+            <button id="logout" class="reviews-logout">Logout</button>
         </div>
     </nav>
 
-    <h1>Adaugă o recenzie</h1>
+    <h1 class="reviews-title">Adaugă o recenzie</h1>
 
-    <form id="reviewForm">
+    <form id="reviewForm" class="reviews-form">
         <select id="bookSelect" required>
             <option value="">Alege o carte</option>
         </select>
         <textarea id="comment" placeholder="Scrie recenzia ta..." required></textarea>
+        <select id="rating" required>
+            <option value="">Alege o evaluare</option>
+            <option value="1">★☆☆☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="4">★★★★☆</option>
+            <option value="5">★★★★★</option>
+        </select>
         <button type="submit">Trimite recenzia</button>
     </form>
-    <div id="errorMsg" class="error-message" style="display: none;"></div>
-    <select id="rating" required>
-        <option value="">Alege o evaluare</option>
-        <option value="1">★☆☆☆☆</option>
-        <option value="2">★★☆☆☆</option>
-        <option value="3">★★★☆☆</option>
-        <option value="4">★★★★☆</option>
-        <option value="5">★★★★★</option>
-    </select>
 
+    <div id="errorMsg" class="reviews-error" style="display: none;"></div>
 
-    <h2>Recenzii recente</h2>
-    <div class="filter-bar">
+    <h2 class="reviews-subtitle">Recenzii recente</h2>
+    <div class="reviews-filter-bar">
         <label for="filterSelect">Filtrează după carte:</label>
         <select id="filterSelect">
             <option value="all">Toate cărțile</option>
         </select>
     </div>
-    <div class="filter-bar">
+    <div class="reviews-filter-bar">
         <label for="sortSelect">Sortează după:</label>
         <select id="sortSelect">
             <option value="recent">Cele mai recente</option>
@@ -51,9 +52,9 @@
             <option value="low">Cele mai slabe</option>
         </select>
     </div>
-    <section id="reviewList" class="review-list"></section>
-    <button id="showMoreBtn" class="show-more" style="display: none;">🔽 Vezi mai multe recenzii</button>
 
+    <section id="reviewList" class="reviews-list"></section>
+    <button id="showMoreBtn" class="reviews-more" style="display: none;"> Vezi mai multe recenzii</button>
 </div>
 
 <script src="reviews.js"></script>

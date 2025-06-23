@@ -2,19 +2,20 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cărți de Citit – Books on Web</title>
     <link rel="stylesheet" href="citire.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <nav class="navbar">
-        <div class="logo">Cărți de Citit</div>
-        <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
+<div class="citire-container">
+    <nav class="citire-navbar">
+        <div class="citire-logo">📖 Cărți de Citit</div>
+        <a href="/Books/books.html" class="citire-back">← Înapoi la cărți</a>
     </nav>
 
-    <h2>Lista de lectură</h2>
-    <section id="readingList" class="book-list"></section>
+    <h2 class="citire-subtitle">Lista de lectură</h2>
+    <section id="readingList" class="citire-list"></section>
 </div>
 
 <script>
@@ -31,7 +32,7 @@
                     list.innerHTML = "";
                     books.reverse().forEach(book => {
                         const card = document.createElement("div");
-                        card.className = "book-card";
+                        card.className = "citire-card";
                         card.innerHTML = `
               <strong>${book.title}</strong><br>
               <span>de ${book.author} (${book.year || "-"})</span><br>
@@ -63,14 +64,13 @@
                         };
 
                         const progressSection = document.createElement("div");
-                        progressSection.style.display = "none";
-                        progressSection.style.marginTop = "10px";
+                        progressSection.className = "progress-section";
                         progressSection.innerHTML = `
-              <label>Număr total de pagini:</label><br>
-              <input type="number" class="total-pages" placeholder="Ex: 300"><br>
-              <label>Pagina actuală:</label><br>
-              <input type="number" class="current-page" placeholder="Ex: 45"><br>
-              <div class="progress-output" style="margin-top: 6px; font-weight: bold;"></div>
+              <label>Număr total de pagini:</label>
+              <input type="number" class="total-pages" placeholder="Ex: 300">
+              <label>Pagina actuală:</label>
+              <input type="number" class="current-page" placeholder="Ex: 45">
+              <div class="progress-output"></div>
             `;
 
                         const totalInput = progressSection.querySelector(".total-pages");
@@ -114,15 +114,11 @@
                                     totalPages: total,
                                     currentPage: current
                                 })
-                            }).then(() => {});
+                            });
                         };
-
                         progressSection.appendChild(saveBtn);
-
                         const buttonGroup = document.createElement("div");
-                        buttonGroup.style.display = "flex";
-                        buttonGroup.style.justifyContent = "center";
-                        buttonGroup.style.gap = "10px";
+                        buttonGroup.className = "button-group";
                         buttonGroup.appendChild(removeBtn);
                         buttonGroup.appendChild(progressBtn);
 
@@ -132,7 +128,6 @@
                     });
                 });
         }
-
         loadReadingList();
     });
 </script>

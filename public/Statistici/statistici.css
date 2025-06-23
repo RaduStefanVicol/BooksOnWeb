@@ -6,25 +6,25 @@ body {
     background: radial-gradient(circle at top left, #7b2ff7, #f107a3);
 }
 
-.container {
+.stats-container {
     max-width: 1200px;
     margin: auto;
     padding: 2rem;
 }
 
-header {
+.stats-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
 }
 
-header h1 {
+.stats-header h1 {
     font-size: 2.2rem;
     color: white;
 }
 
-#logout {
+.stats-logout {
     padding: 0.5rem 1rem;
     background-color: #ef5350;
     color: white;
@@ -34,22 +34,25 @@ header h1 {
     cursor: pointer;
 }
 
-.filters {
+.stats-filters {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 2rem;
+    align-items: center;
 }
 
-.filters select, .filters button {
+.stats-filters select,
+.stats-filters button {
     padding: 0.6rem 1rem;
     font-size: 1rem;
     border-radius: 8px;
     border: 1px solid #ccc;
     background-color: #fff;
+    color: #333;
 }
 
-.stats {
+.stats-summary {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -79,7 +82,8 @@ header h1 {
     margin: 0;
 }
 
-.chart-section, .table-section {
+.chart-section,
+.table-section {
     background-color: #fff;
     padding: 1.5rem;
     margin-top: 2rem;
@@ -87,7 +91,8 @@ header h1 {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
 }
 
-.chart-section h2, .table-section h2 {
+.chart-section h2,
+.table-section h2 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: #7b2ff7;
@@ -100,7 +105,8 @@ header h1 {
     font-size: 0.95rem;
 }
 
-#reviewTable th, #reviewTable td {
+#reviewTable th,
+#reviewTable td {
     padding: 0.75rem;
     text-align: left;
     border-bottom: 1px solid #e0e0e0;
@@ -112,9 +118,37 @@ header h1 {
 }
 
 #reviewTable td {
-    color: black; /* <- ADĂUGAT pentru a face textul recenziilor vizibil */
+    color: black;
 }
 
 #reviewTable tr:hover {
     background-color: #f1f8ff;
+}
+#reviewTable td {
+    word-break: break-word;
+    max-width: 250px;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .stats-summary {
+        flex-direction: column;
+    }
+
+    .stats-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stats-filters select,
+    .stats-filters button {
+        width: 100%;
+    }
+    .table-section {
+        overflow-x: auto;
+    }
+
+    #reviewTable {
+        min-width: 600px;
+    }
 }

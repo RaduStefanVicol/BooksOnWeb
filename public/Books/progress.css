@@ -4,56 +4,74 @@ body {
     color: white;
     padding: 40px;
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
-.container {
-    max-width: 800px;
-    margin: auto;
+.progress-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
-.navbar {
+.progress-navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
-.logo {
-    font-size: 26px;
-    font-weight: 700;
+.progress-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
 }
 
-.back-btn {
+.progress-back {
+    background: rgba(255, 255, 255, 0.1);
     color: white;
-    text-decoration: none;
-    background: rgba(255,255,255,0.1);
+    border: none;
     padding: 8px 16px;
     border-radius: 8px;
-    transition: 0.3s;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s ease;
 }
 
-.back-btn:hover {
-    background: rgba(255,255,255,0.25);
+.progress-back:hover {
+    background: rgba(255, 255, 255, 0.25);
 }
 
-h2 {
+.progress-subtitle {
     text-align: center;
-    margin-bottom: 30px;
+    font-size: 1.8rem;
 }
 
-.book-list {
+.progress-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
-.book-card {
+.progress-card {
     background: rgba(255,255,255,0.08);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     backdrop-filter: blur(4px);
+}
+
+.progress-card strong {
+    display: block;
+    font-size: 18px;
+}
+
+.progress-card span,
+.progress-card em {
+    font-size: 14px;
+    opacity: 0.85;
 }
 
 .bar-container {
@@ -75,4 +93,24 @@ h2 {
 .percent {
     margin-top: 6px;
     font-weight: bold;
+    color: #fbbf24;
+}
+
+/* === Responsive === */
+@media (min-width: 768px) {
+    .progress-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .progress-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1440px) {
+    .progress-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

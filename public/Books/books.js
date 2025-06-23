@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const yearFilter = document.getElementById("yearFilter");
 
     let allBooks = [];
-
+    // datele vin din get /api/books
     function populateFilters(books) {
         const categories = new Set();
         const authors = new Set();

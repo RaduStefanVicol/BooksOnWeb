@@ -13,7 +13,6 @@ if (registerForm) {
         errorElement.textContent = "";
         successElement.textContent = "";
 
-        // Validare simplă
         if (!username || !password || !confirm) {
             errorElement.textContent = "Completează toate câmpurile.";
             return;

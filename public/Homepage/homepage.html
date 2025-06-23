@@ -2,31 +2,32 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books on Web – Homepage</title>
     <link rel="stylesheet" href="homepage.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <nav class="navbar">
-        <div class="logo">📚 Books on Web</div>
-        <button id="logout" class="logout-btn">Logout</button>
+<div class="homepage-container">
+    <nav class="homepage-navbar">
+        <div class="homepage-logo">📚 Books on Web</div>
+        <button id="logout" class="homepage-logout">Logout</button>
     </nav>
 
-    <section class="content">
-        <h1 class="welcome" id="welcome">Bun venit!</h1>
-        <div class="card-grid">
-            <a href="/Books/books.html" class="card">
+    <section class="homepage-content">
+        <h1 class="homepage-welcome" id="welcome">Bun venit!</h1>
+        <div class="homepage-cards">
+            <a href="/Books/books.html" class="homepage-card">
                 <div class="icon">📖</div>
                 <h2>Cărți</h2>
                 <p>Descoperă sau adaugă cărți noi în colecție.</p>
             </a>
-            <a href="/Reviews/reviews.html" class="card">
+            <a href="/Reviews/reviews.html" class="homepage-card">
                 <div class="icon">📝</div>
                 <h2>Recenzii</h2>
                 <p>Scrie păreri despre cărțile citite sau citește recenzii.</p>
             </a>
-            <a href="/Statistici/statistici.html" class="card">
+            <a href="/Statistici/statistici.html" class="homepage-card">
                 <div class="icon">📊</div>
                 <h2>Statistici</h2>
                 <p>Vezi cele mai apreciate lecturi și preferințele comunității.</p>
@@ -36,19 +37,31 @@
 </div>
 
 <script>
-    const user = localStorage.getItem("user");
+    function getUsernameFromToken() {
+        const token = localStorage.getItem("token");
+        if (!token) return null;
+
+        try {
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            const isExpired = payload.exp && Date.now() >= payload.exp * 1000;
+            if (isExpired) return null;
+            return payload.username;
+        } catch {
+            return null;
+        }
+    }
+
+    const user = getUsernameFromToken();
 
     if (!user) {
         window.location.href = "/Autentificare/login.html";
     } else if (user === "admin") {
-        // Dacă admin încearcă să forțeze accesul la homepage, îl redirecționăm înapoi
         window.location.href = "/Administrator/pagAdmin.html";
     } else {
         document.getElementById("welcome").textContent = `Bun venit, ${user}!`;
     }
 
     document.getElementById("logout").addEventListener("click", () => {
-        localStorage.removeItem("user");
         localStorage.removeItem("token");
         window.location.href = "/Autentificare/login.html";
     });

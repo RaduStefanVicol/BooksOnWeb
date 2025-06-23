@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         currentIndex += BATCH_SIZE;
         showMoreBtn.textContent = currentIndex < filteredReviews.length
-            ? "🔽 Vezi mai multe recenzii"
-            : "🔼 Ascunde recenziile";
+            ? " Vezi mai multe recenzii"
+            : " Ascunde recenziile";
         showMoreBtn.style.display = filteredReviews.length > BATCH_SIZE ? "block" : "none";
     }
 

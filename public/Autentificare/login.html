@@ -2,25 +2,26 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autentificare - Books on Web</title>
     <link rel="stylesheet" href="login.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="login-container">
-    <h1> Autentificare</h1>
-    <p class="subtitle">Intră în contul tău și continuă lectura </p>
+    <h1 class="login-title">Autentificare</h1>
+    <p class="login-subtitle">Intră în contul tău și continuă lectura</p>
 
-    <form id="loginForm">
+    <form id="loginForm" class="login-form">
         <input type="text" id="username" name="username" placeholder="Nume utilizator" required>
         <input type="password" id="password" name="password" placeholder="Parolă" required>
         <button type="submit" class="btn-login">Autentificare</button>
     </form>
 
-    <p id="error" style="color: red; margin-top: 10px;"></p>
+    <p id="error" class="login-error"></p>
 
-    <p class="register">Nu ai cont? <a href="register.html">Înregistrează-te aici</a></p>
-    <p class="footer">Creat cu pasiun pentru iubitorii de cărți.</p>
+    <p class="login-register">Nu ai cont? <a href="register.html">Înregistrează-te aici</a></p>
+    <p class="login-footer">Creat cu pasiune pentru iubitorii de cărți.</p>
 </div>
 
 <script src="login.js"></script>

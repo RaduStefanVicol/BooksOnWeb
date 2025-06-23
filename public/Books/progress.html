@@ -2,19 +2,20 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Progres Lectură – Books on Web</title>
   <link rel="stylesheet" href="progress.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-  <nav class="navbar">
-    <div class="logo"> Progres Lectură</div>
-    <a href="/Books/books.html" class="back-btn">← Înapoi la cărți</a>
+<div class="progress-container">
+  <nav class="progress-navbar">
+    <div class="progress-logo">📖 Progres Lectură</div>
+    <a href="/Books/books.html" class="progress-back">← Înapoi la cărți</a>
   </nav>
 
-  <h2>Cărți și progresul tău</h2>
-  <section id="progressList" class="book-list"></section>
+  <h2 class="progress-subtitle">Cărți și progresul tău</h2>
+  <section id="progressList" class="progress-list"></section>
 </div>
 
 <script>
@@ -32,16 +33,16 @@
                 const percent = ((book.currentPage / book.totalPages) * 100).toFixed(1);
 
                 const card = document.createElement("div");
-                card.className = "book-card";
+                card.className = "progress-card";
                 card.innerHTML = `
-            <strong>${book.title}</strong><br>
-            <span>de ${book.author}</span><br>
-            <em>${book.currentPage} / ${book.totalPages} pagini</em><br>
-            <div class="bar-container">
-              <div class="bar" style="width: ${percent}%;"></div>
-            </div>
-            <div class="percent">${percent}% citit</div>
-          `;
+          <strong>${book.title}</strong><br>
+          <span>de ${book.author}</span><br>
+          <em>${book.currentPage} / ${book.totalPages} pagini</em><br>
+          <div class="bar-container">
+            <div class="bar" style="width: ${percent}%;"></div>
+          </div>
+          <div class="percent">${percent}% citit</div>
+        `;
                 list.appendChild(card);
               });
             });

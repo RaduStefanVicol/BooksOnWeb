@@ -2,23 +2,23 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrare cărți – Books on Web</title>
     <link rel="stylesheet" href="pagAdmin.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <nav class="navbar">
-        <div class="logo">📖 Administrare cărți</div>
+<div class="admin-container">
+    <nav class="admin-navbar">
+        <div class="admin-logo">📖 Administrare cărți</div>
         <div>
-            <button id="logout" class="logout-btn">Logout</button>
+            <button id="logout" class="admin-logout">Logout</button>
         </div>
     </nav>
 
-    <h1>Adaugă o carte nouă</h1>
+    <h1 class="admin-title">Adaugă o carte nouă</h1>
 
-
-    <form id="addBookForm">
+    <form id="addBookForm" class="admin-form">
         <input type="text" id="title" placeholder="Titlul cărții" required>
         <input type="text" id="author" placeholder="Autor" required>
         <input type="number" id="year" placeholder="Anul publicării" required>
@@ -26,11 +26,11 @@
         <input type="text" id="publisher" placeholder="Editura">
         <input type="text" id="edition" placeholder="Ediția">
         <input type="text" id="related" placeholder="Cărți înrudite (separate prin virgulă)">
-        <button type="submit">Adaugă</button>
+        <button type="submit" class="admin-submit">Adaugă</button>
     </form>
 
-    <h2>Cărțile Adaugate</h2>
-    <section id="bookList" class="book-list"></section>
+    <h2 class="admin-subtitle">Cărțile Adăugate</h2>
+    <section id="bookList" class="admin-book-list"></section>
 </div>
 
 <script src="pagAdmin.js"></script>

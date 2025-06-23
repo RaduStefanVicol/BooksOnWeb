@@ -2,42 +2,42 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books – Books on Web</title>
     <link rel="stylesheet" href="books.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-    <nav class="navbar">
-        <div class="logo"> Books</div>
-        <div>
-            <a href="/Homepage/homepage.html" class="back-btn">Homepage</a>
-            <a href="/Books/citire.html" class="back-btn"> Citire</a>
-            <a href="/Books/favorite.html" class="back-btn"> Favorite</a>
-            <a href="/Books/progress.html" class="back-btn">Progres</a>
-            <a href="/Books/citire-grup.html" class="back-btn"> Citire in grup</a>
-            <button id="logout" class="logout-btn">Logout</button>
+<div class="books-container">
+    <nav class="books-navbar">
+        <div class="books-logo">📚 Books</div>
+        <div class="books-links">
+            <a href="/Homepage/homepage.html" class="books-btn">Homepage</a>
+            <a href="/Books/citire.html" class="books-btn">Citire</a>
+            <a href="/Books/favorite.html" class="books-btn">Favorite</a>
+            <a href="/Books/progress.html" class="books-btn">Progres</a>
+            <a href="/Books/citire-grup.html" class="books-btn">Citire în grup</a>
+            <button id="logout" class="books-logout">Logout</button>
         </div>
     </nav>
 
-    <!-- Formular de filtrare -->
-    <form id="filterForm" style="display: flex; gap: 12px; margin: 20px 0; flex-wrap: wrap;">
+    <form id="filterForm" class="books-filter">
         <select id="categoryFilter"><option value="">Categorie</option></select>
         <select id="authorFilter"><option value="">Autor</option></select>
         <select id="publisherFilter"><option value="">Editură</option></select>
         <select id="yearFilter"><option value="">An</option></select>
     </form>
 
-    <h2>Cărțile adăugate de admin</h2>
-    <section id="bookList" class="book-list"></section>
+    <h2 class="books-subtitle">Cărțile adăugate de admin</h2>
+    <section id="bookList" class="books-list"></section>
 
-    <h2>Caută o carte în Google Books</h2>
-    <form id="searchForm">
+    <h2 class="books-subtitle">Caută o carte în Google Books</h2>
+    <form id="searchForm" class="books-search">
         <input type="text" id="searchInput" placeholder="Caută după titlu..." required>
         <button type="submit">Caută</button>
     </form>
 
-    <section id="googleResults" class="book-list"></section>
+    <section id="googleResults" class="books-list"></section>
 </div>
 
 <script src="books.js"></script>
